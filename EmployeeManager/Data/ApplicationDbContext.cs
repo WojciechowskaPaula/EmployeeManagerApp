@@ -20,8 +20,6 @@ namespace EmployeeManager.Data
         public DbSet<Position> Positions { get; set; }
         public DbSet<EmployeeProject> EmployeeProject { get; set; }
 
-
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -35,7 +33,6 @@ namespace EmployeeManager.Data
             modelBuilder.Entity<Employee>()
                 .HasOne(x => x.Position).WithOne(y => y.Employee)
                 .HasForeignKey<Position>(x => x.EmployeeId);
-                
         }
     }
 }

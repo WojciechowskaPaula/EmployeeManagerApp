@@ -15,16 +15,10 @@ namespace EmployeeManager.Models
         public string  City { get; set; }
         public string Country { get; set; }
         public string ZipCode { get; set; }
-        
-
         public ICollection<EmployeeProject> EmployeeProjects { get; set; }
         public JobHistory JobHistory { get; set; }
-
         public int ManagerId { get; set; }
         public Manager Manager { get; set; }
-
         public Position Position { get; set; }
-
-
     }
 }
