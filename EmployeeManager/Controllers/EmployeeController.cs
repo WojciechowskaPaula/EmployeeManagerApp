@@ -1,4 +1,5 @@
 ﻿using EmployeeManager.Interfaces;
+using EmployeeManager.Models;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -21,5 +22,12 @@ namespace EmployeeManager.Controllers
             var employees = _employeeService.GetAllEmployees();
             return View(employees);
         }
+
+        public IActionResult Details(int id)
+        {
+            var details = _employeeService.GetEmployeeDetail(id);
+            return View(details);
+        }
+        
     }
 }
