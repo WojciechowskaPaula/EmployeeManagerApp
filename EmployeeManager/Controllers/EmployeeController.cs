@@ -29,5 +29,16 @@ namespace EmployeeManager.Controllers
             return View(details);
         }
         
+        [HttpGet]
+        public IActionResult AddEmployeeForm()
+        {
+            return View();
+        }
+        [HttpPost]
+        public IActionResult AddNewEmployee(Employee employee)
+        {
+            var newEmployee = _employeeService.AddNewEmployee(employee);
+            return RedirectToAction("Index");
+        }
     }
 }

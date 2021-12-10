@@ -11,5 +11,6 @@ namespace EmployeeManager.Interfaces
     {
         List<Employee> GetAllEmployees();
         EmployeeDetailVM GetEmployeeDetail(int id);
+        Employee AddNewEmployee(Employee employee);
     }
 }

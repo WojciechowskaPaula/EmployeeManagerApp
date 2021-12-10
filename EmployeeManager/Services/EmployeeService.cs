@@ -37,6 +37,24 @@ namespace EmployeeManager.Services
             vm.Position = detail.Position;
             return vm;
         }
+        
+        public Employee AddNewEmployee(Employee employee)
+        {
+            var newEmployee = new Employee();
+            newEmployee.EmployeeId = employee.EmployeeId;
+            newEmployee.FirstName = employee.FirstName;
+            newEmployee.LastName = employee.LastName;
+            newEmployee.BirthDate = employee.BirthDate;
+            newEmployee.Gender = employee.Gender;
+            newEmployee.City = employee.City;
+            newEmployee.Country = employee.Country;
+            newEmployee.ZipCode = employee.ZipCode;
+            newEmployee.ManagerId = employee.ManagerId;
+            newEmployee.Position = employee.Position;
+            _dbContext.Employees.Add(newEmployee);
+            _dbContext.SaveChanges();
+            return newEmployee;
+        }
 
     }
 
