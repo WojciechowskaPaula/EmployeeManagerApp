@@ -56,6 +56,28 @@ namespace EmployeeManager.Services
             return newEmployee;
         }
 
+        public Employee GetEmployeebyId(int id)
+        {
+           var employee =  _dbContext.Employees.FirstOrDefault(x => x.EmployeeId == id);
+            return employee;
+        }
+        public Employee UpdateEmployee(Employee employee)
+        {
+            var oldEmployee = _dbContext.Employees.FirstOrDefault(x => x.EmployeeId == employee.EmployeeId);
+           
+            oldEmployee.EmployeeId = employee.EmployeeId;
+            oldEmployee.FirstName = employee.FirstName;
+            oldEmployee.LastName = employee.LastName;
+            oldEmployee.BirthDate = employee.BirthDate;
+            oldEmployee.Gender = employee.Gender;
+            oldEmployee.City = employee.City;
+            oldEmployee.Country = employee.Country;
+            oldEmployee.ZipCode = employee.ZipCode;
+            oldEmployee.ManagerId = employee.ManagerId;
+            oldEmployee.Position = employee.Position;
+            _dbContext.SaveChanges();
+            return employee;
+        }
     }
 
     

@@ -40,5 +40,18 @@ namespace EmployeeManager.Controllers
             var newEmployee = _employeeService.AddNewEmployee(employee);
             return RedirectToAction("Index");
         }
+
+        [HttpGet]
+        public IActionResult EditEmployeeForm(int id)
+        {
+            var edit = _employeeService.GetEmployeebyId(id);
+            return View(edit);
+        }
+        [HttpPost]
+        public IActionResult Update(Employee employee)
+        {
+            var update = _employeeService.UpdateEmployee(employee);
+            return RedirectToAction("Index");
+        }
     }
 }
