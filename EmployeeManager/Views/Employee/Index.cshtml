@@ -75,7 +75,7 @@
             <td>
                 @Html.ActionLink("Edit", "EditEmployeeForm", new { id = item.EmployeeId }) |
                 @Html.ActionLink("Details", "Details", new { id = item.EmployeeId }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                @Html.ActionLink("Delete", "DeleteAndConfirm", new { id=item.EmployeeId })
             </td>
         </tr>
 }

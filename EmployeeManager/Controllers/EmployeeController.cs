@@ -17,12 +17,14 @@ namespace EmployeeManager.Controllers
             _employeeService = employeeService;
         }
 
+        [HttpGet]
         public IActionResult Index()
         {
             var employees = _employeeService.GetAllEmployees();
             return View(employees);
         }
 
+        [HttpGet]
         public IActionResult Details(int id)
         {
             var details = _employeeService.GetEmployeeDetail(id);
@@ -44,13 +46,28 @@ namespace EmployeeManager.Controllers
         [HttpGet]
         public IActionResult EditEmployeeForm(int id)
         {
-            var edit = _employeeService.GetEmployeebyId(id);
+            var edit = _employeeService.GetEmployeeById(id);
             return View(edit);
         }
         [HttpPost]
         public IActionResult Update(Employee employee)
         {
             var update = _employeeService.UpdateEmployee(employee);
+            return RedirectToAction("Index");
+        }
+       
+        [HttpGet]
+        public IActionResult DeleteAndConfirm(int id)
+        {
+            var employeeToDelete = _employeeService.GetEmployeeById(id);
+            return View(employeeToDelete);
+        }
+
+        [HttpPost]
+        public IActionResult Delete(int id)
+        {
+             _employeeService.Delete(id);
+           
             return RedirectToAction("Index");
         }
     }

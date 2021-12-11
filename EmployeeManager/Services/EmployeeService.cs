@@ -56,7 +56,7 @@ namespace EmployeeManager.Services
             return newEmployee;
         }
 
-        public Employee GetEmployeebyId(int id)
+        public Employee GetEmployeeById(int id)
         {
            var employee =  _dbContext.Employees.FirstOrDefault(x => x.EmployeeId == id);
             return employee;
@@ -77,6 +77,13 @@ namespace EmployeeManager.Services
             oldEmployee.Position = employee.Position;
             _dbContext.SaveChanges();
             return employee;
+        }
+       
+        public void Delete(int id)
+        {
+            var employee = _dbContext.Employees.FirstOrDefault(x => x.EmployeeId == id);
+            _dbContext.Employees.Remove(employee);
+            _dbContext.SaveChanges();
         }
     }
 

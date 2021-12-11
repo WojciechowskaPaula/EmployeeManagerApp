@@ -12,7 +12,8 @@ namespace EmployeeManager.Interfaces
         List<Employee> GetAllEmployees();
         EmployeeDetailVM GetEmployeeDetail(int id);
         Employee AddNewEmployee(Employee employee);
-        Employee GetEmployeebyId(int id);
+        Employee GetEmployeeById(int id);
         Employee UpdateEmployee(Employee employee);
+        void Delete(int id);
     }
 }
