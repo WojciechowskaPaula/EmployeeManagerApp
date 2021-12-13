@@ -11,10 +11,12 @@ namespace EmployeeManager.Controllers
     public class EmployeeController : Controller
     {
         private readonly IEmployeeService _employeeService;
+        private readonly IProjectService _projectService;
 
-        public EmployeeController(IEmployeeService employeeService)
+        public EmployeeController(IEmployeeService employeeService, IProjectService projectService)
         {
             _employeeService = employeeService;
+            _projectService = projectService;
         }
 
         [HttpGet]
@@ -28,6 +30,8 @@ namespace EmployeeManager.Controllers
         public IActionResult Details(int id)
         {
             var details = _employeeService.GetEmployeeDetail(id);
+            var employeeProject = _projectService.GetProjectByEmployeeId(id);
+            details.Projects = employeeProject;
             return View(details);
         }
         
@@ -46,7 +50,7 @@ namespace EmployeeManager.Controllers
         [HttpGet]
         public IActionResult EditEmployeeForm(int id)
         {
-            var edit = _employeeService.GetEmployeeById(id);
+            var edit = _employeeService.GetEmployeeByIdForEdit(id);
             return View(edit);
         }
         [HttpPost]

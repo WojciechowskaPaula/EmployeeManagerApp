@@ -17,5 +17,6 @@ namespace EmployeeManager.Models.ViewModels
         public string ZipCode { get; set; }
         public int ManagerId { get; set; }
         public Position Position { get; set; }
+        public List<Project> Projects { get; set; }
     }
 }

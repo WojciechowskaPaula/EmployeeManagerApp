@@ -15,5 +15,6 @@ namespace EmployeeManager.Interfaces
         Employee GetEmployeeById(int id);
         Employee UpdateEmployee(Employee employee);
         void Delete(int id);
+        EmployeeEditVM GetEmployeeByIdForEdit(int id);
     }
 }

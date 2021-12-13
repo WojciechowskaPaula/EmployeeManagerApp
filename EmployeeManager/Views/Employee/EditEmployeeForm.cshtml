@@ -1,4 +1,5 @@
-﻿@model EmployeeManager.Models.Employee
+﻿@model EmployeeManager.Models.ViewModels.EmployeeEditVM
+{
 
 @{
     ViewData["Title"] = "EditEmployeeForm";
@@ -17,7 +18,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="FirstName" class="control-label"></label>
-                <input asp-for="FirstName" class="form-control"  />
+                <input asp-for="FirstName" class="form-control" />
                 <span asp-validation-for="FirstName" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -55,10 +56,13 @@
                 <input asp-for="ManagerId" class="form-control" />
                 <span asp-validation-for="ManagerId" class="text-danger"></span>
             </div>
+
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>
+
         </form>
+
     </div>
 </div>
 

@@ -35,6 +35,7 @@ namespace EmployeeManager.Services
             vm.ZipCode = detail.ZipCode;
             vm.ManagerId = detail.ManagerId;
             vm.Position = detail.Position;
+            
             return vm;
         }
         
@@ -84,6 +85,23 @@ namespace EmployeeManager.Services
             var employee = _dbContext.Employees.FirstOrDefault(x => x.EmployeeId == id);
             _dbContext.Employees.Remove(employee);
             _dbContext.SaveChanges();
+        }
+
+        public EmployeeEditVM GetEmployeeByIdForEdit(int id)
+        {
+            var employee = _dbContext.Employees.FirstOrDefault(x => x.EmployeeId == id);
+            var employeeEditVm = new EmployeeEditVM();
+            employeeEditVm.EmployeeId = employee.EmployeeId;
+            employeeEditVm.FirstName = employee.FirstName;
+            employeeEditVm.LastName = employee.LastName;
+            employeeEditVm.BirthDate = employee.BirthDate.ToString("d");
+            employeeEditVm.Gender = employee.Gender;
+            employeeEditVm.City = employee.City;
+            employeeEditVm.Country = employee.Country;
+            employeeEditVm.ZipCode = employee.ZipCode;
+            employeeEditVm.ManagerId = employee.ManagerId;
+            employeeEditVm.Position = employee.Position;
+            return employeeEditVm;
         }
     }
 

@@ -22,5 +22,11 @@ namespace EmployeeManager.Controllers
             return View();
         }
 
+        public IActionResult AddNewProject(Project project)
+        {
+           var newProject = _projectService.AddNewProject(project);
+            return RedirectToAction("Index");
+
+        }
     }
 }
