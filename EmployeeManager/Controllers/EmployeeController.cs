@@ -51,6 +51,7 @@ namespace EmployeeManager.Controllers
         public IActionResult EditEmployeeForm(int id)
         {
             var edit = _employeeService.GetEmployeeByIdForEdit(id);
+            edit.Projects = _projectService.GetProjectByEmployeeId(id);
             return View(edit);
         }
         [HttpPost]
