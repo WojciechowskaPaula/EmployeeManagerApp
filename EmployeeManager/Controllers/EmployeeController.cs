@@ -29,8 +29,9 @@ namespace EmployeeManager.Controllers
         [HttpGet]
         public IActionResult Details(int id)
         {
-            var details = _employeeService.GetEmployeeDetail(id);
             var employeeProject = _projectService.GetProjectByEmployeeId(id);
+            var details = _employeeService.GetEmployeeDetail(id);
+            
             details.Projects = employeeProject;
             return View(details);
         }

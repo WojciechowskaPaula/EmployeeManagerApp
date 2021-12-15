@@ -1,4 +1,5 @@
 ﻿using EmployeeManager.Models;
+using EmployeeManager.Models.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +13,7 @@ namespace EmployeeManager.Interfaces
         List<Project> GetListOfProjects();
         void DeleteProject(int id);
         Project AddNewProject(Project project);
-
+        ProjectDetailVM DisplayProjectDetails(int id);
+        List<Employee> GetEmployeeByProjectId(int projectId);
     }
 }

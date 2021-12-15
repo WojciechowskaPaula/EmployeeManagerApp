@@ -29,5 +29,14 @@ namespace EmployeeManager.Controllers
             return RedirectToAction("Index");
 
         }
+
+        public IActionResult Details(int id)
+        {
+           var employeeList = _projectService.GetEmployeeByProjectId(id);
+           var details = _projectService.DisplayProjectDetails(id);
+            details.Employees = employeeList;
+            return View(details);
+
+        }
     }
 }

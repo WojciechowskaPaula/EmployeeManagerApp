@@ -1,6 +1,7 @@
 ﻿using EmployeeManager.Data;
 using EmployeeManager.Interfaces;
 using EmployeeManager.Models;
+using EmployeeManager.Models.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,6 +30,21 @@ namespace EmployeeManager.Services
             return projects;
         }
 
+        public ProjectDetailVM DisplayProjectDetails(int projectId)
+        {
+            var project = _dbContext.Projects.FirstOrDefault(x => x.ProjectId == projectId);
+            ProjectDetailVM detailVM = new ProjectDetailVM();
+            detailVM.ProjectId = project.ProjectId;
+            detailVM.ProjectName = project.ProjectName;
+            return detailVM;
+            
+        }
+
+        public List<Employee> GetEmployeeByProjectId(int projectId)
+        {
+            var employee = _dbContext.EmployeeProject.Where(x => x.ProjectId == projectId).Select(y=>y.Employee).ToList();
+            return employee;
+        }
         public void DeleteProject(int id)
         {
             var project = _dbContext.Projects.FirstOrDefault(x => x.ProjectId == id);
