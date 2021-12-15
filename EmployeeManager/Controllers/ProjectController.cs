@@ -19,7 +19,8 @@ namespace EmployeeManager.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            var projects = _projectService.GetListOfProjects();
+            return View(projects);
         }
 
         public IActionResult AddNewProject(Project project)
