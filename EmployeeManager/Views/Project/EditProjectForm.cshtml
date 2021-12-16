@@ -48,7 +48,7 @@
                     <td>@item.EmployeeId </td>
                     <td>@item.FirstName</td>
                     <td>@item.LastName</td>
-                    <td><a class="btn btn-danger">Delete</a></td>
+                    <td><a class="btn btn-danger" asp-controller="Project"asp-action="DeleteFromEmployee" asp-route-employeeId ="@item.EmployeeId" asp-route-projectId="@Model.ProjectId">Delete</a></td>
                 </tr>
             }
         </tbody>

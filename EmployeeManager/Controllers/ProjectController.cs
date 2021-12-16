@@ -60,12 +60,17 @@ namespace EmployeeManager.Controllers
             return RedirectToAction("Index");
         }
 
+        
+        public IActionResult DeleteFromEmployee(int projectId, int employeeId)
+        {
+            _projectService.DeleteProjectFromEmployee(projectId, employeeId);
+            return RedirectToAction("EditProjectForm",new {id = projectId});
+        }
         [HttpGet]
         public IActionResult EditProjectForm(int id)
         {
             var project = _projectService.GetProjectByProjectId(id);
             project.Employees = _projectService.GetEmployeeByProjectId(id);
-
             return View(project);
         }
 

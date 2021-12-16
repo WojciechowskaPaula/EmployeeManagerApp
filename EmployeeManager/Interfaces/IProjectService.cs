@@ -12,6 +12,7 @@ namespace EmployeeManager.Interfaces
         List<Project> GetProjectByEmployeeId(int id);
         List<Project> GetListOfProjects();
         void DeleteProject(int id);
+        void DeleteProjectFromEmployee(int projectId, int employeeId);
         Project AddNewProject(Project project);
         ProjectDetailVM DisplayProjectDetails(int id);
         List<Employee> GetEmployeeByProjectId(int projectId);

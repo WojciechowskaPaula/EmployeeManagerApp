@@ -53,15 +53,14 @@ namespace EmployeeManager.Services
             _dbContext.Remove(project);
             _dbContext.SaveChanges();
         }
-
       
-        public void DeleteProjectFromEmployee(int employeeId)
+        public void DeleteProjectFromEmployee(int projectId, int employeeId)
         {
-            var project = _dbContext.EmployeeProject.FirstOrDefault(x => x.EmployeeId == employeeId);
+            var project = _dbContext.EmployeeProject.Where(x => x.EmployeeId == employeeId && x.ProjectId == projectId).FirstOrDefault();
             _dbContext.Remove(project);
             _dbContext.SaveChanges();
         }
-
+       
         public Project AddNewProject(Project project)
         {
             var newProject = new Project();
