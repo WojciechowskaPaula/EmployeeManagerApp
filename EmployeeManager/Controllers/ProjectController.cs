@@ -17,18 +17,27 @@ namespace EmployeeManager.Controllers
             _projectService = projectService;
         }
 
+        [HttpGet]
         public IActionResult Index()
         {
             var projects = _projectService.GetListOfProjects();
             return View(projects);
         }
 
+        [HttpGet]
+        public IActionResult AddNewProject()
+        {
+            return View();
+        }
+
+        [HttpPost]
         public IActionResult AddNewProject(Project project)
         {
            var newProject = _projectService.AddNewProject(project);
             return RedirectToAction("Index");
         }
 
+        [HttpGet]
         public IActionResult Details(int id)
         {
            var employeeList = _projectService.GetEmployeeByProjectId(id);
@@ -37,6 +46,7 @@ namespace EmployeeManager.Controllers
             return View(details);
         }
 
+        [HttpPost]
         public IActionResult Delete(int id)
         {
             _projectService.DeleteProject(id);
