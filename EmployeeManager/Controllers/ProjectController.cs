@@ -27,7 +27,6 @@ namespace EmployeeManager.Controllers
         {
            var newProject = _projectService.AddNewProject(project);
             return RedirectToAction("Index");
-
         }
 
         public IActionResult Details(int id)
@@ -36,7 +35,12 @@ namespace EmployeeManager.Controllers
            var details = _projectService.DisplayProjectDetails(id);
             details.Employees = employeeList;
             return View(details);
+        }
 
+        public IActionResult Delete(int id)
+        {
+            _projectService.DeleteProject(id);
+            return RedirectToAction("Index");
         }
     }
 }
