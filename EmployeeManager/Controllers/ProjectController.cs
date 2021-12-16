@@ -52,5 +52,21 @@ namespace EmployeeManager.Controllers
             _projectService.DeleteProject(id);
             return RedirectToAction("Index");
         }
+
+        [HttpGet]
+        public IActionResult EditProjectForm(int id)
+        {
+            var project = _projectService.GetProjectByProjectId(id);
+            project.Employees = _projectService.GetEmployeeByProjectId(id);
+
+            return View(project);
+        }
+
+        [HttpPost]
+        public IActionResult Update(Project project)
+        {
+            _projectService.UpdateProject(project);
+            return RedirectToAction("Index");
+        }
     }
 }

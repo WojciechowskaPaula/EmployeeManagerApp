@@ -31,7 +31,7 @@
                 @Html.DisplayFor(modelItem => item.ProjectName)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Edit", "EditProjectForm", new { id= item.ProjectId }) |
                 @Html.ActionLink("Details", "Details", new { id=item.ProjectId }) |
                 @Html.ActionLink("Delete", "Delete", new { id = item.ProjectId})
             </td>

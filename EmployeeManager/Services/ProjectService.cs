@@ -68,6 +68,23 @@ namespace EmployeeManager.Services
             return newProject;
         }
 
+        public ProjectEditVM GetProjectByProjectId(int id)
+        {
+           var project = _dbContext.Projects.FirstOrDefault(x => x.ProjectId == id);
+            var editProject = new ProjectEditVM();
+            editProject.ProjectId = project.ProjectId;
+            editProject.ProjectName = project.ProjectName;
+            return editProject;
+        }
+       
+       public Project UpdateProject(Project project)
+        {
+            var oldProject = _dbContext.Projects.FirstOrDefault(x => x.ProjectId == project.ProjectId);
+            oldProject.ProjectId = project.ProjectId;
+            oldProject.ProjectName = project.ProjectName;
+            _dbContext.SaveChanges();
+            return project;
+        }
 
     }
 }

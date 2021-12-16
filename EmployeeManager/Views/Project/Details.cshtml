@@ -48,11 +48,7 @@
         </tbody>
     </table>
 </div>
-
-<div class="form-group">
-    <input type="submit" value="Save" class="btn btn-primary" />
-</div>
 <div>
-    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    @Html.ActionLink("Edit", "EditProjectForm", new { id=Model.ProjectId }) |
     <a asp-action="Index">Back to List</a>
 </div>
