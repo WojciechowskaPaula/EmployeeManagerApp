@@ -46,6 +46,13 @@ namespace EmployeeManager.Controllers
             return View(details);
         }
 
+        [HttpGet]
+        public IActionResult DeleteAndConfirm(int projectId)
+        {
+            var project = _projectService.DisplayProjectDetails(projectId);
+            return View(project);
+        }
+
         [HttpPost]
         public IActionResult Delete(int id)
         {

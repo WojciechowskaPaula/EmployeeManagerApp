@@ -33,7 +33,7 @@
             <td>
                 @Html.ActionLink("Edit", "EditProjectForm", new { id= item.ProjectId }) |
                 @Html.ActionLink("Details", "Details", new { id=item.ProjectId }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.ProjectId})
+                @Html.ActionLink("Delete", "DeleteAndConfirm", new { projectId = item.ProjectId})
             </td>
         </tr>
 }

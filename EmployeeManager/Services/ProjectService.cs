@@ -45,12 +45,16 @@ namespace EmployeeManager.Services
             var employee = _dbContext.EmployeeProject.Where(x => x.ProjectId == projectId).Select(y=>y.Employee).ToList();
             return employee;
         }
+       
+        
         public void DeleteProject(int id)
         {
             var project = _dbContext.Projects.FirstOrDefault(x => x.ProjectId == id);
             _dbContext.Remove(project);
             _dbContext.SaveChanges();
         }
+
+      
         public void DeleteProjectFromEmployee(int employeeId)
         {
             var project = _dbContext.EmployeeProject.FirstOrDefault(x => x.EmployeeId == employeeId);
