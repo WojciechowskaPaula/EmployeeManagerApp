@@ -1,6 +1,7 @@
 ﻿using EmployeeManager.Interfaces;
 using EmployeeManager.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,11 +13,14 @@ namespace EmployeeManager.Controllers
     {
         private readonly IEmployeeService _employeeService;
         private readonly IProjectService _projectService;
+        private readonly IManagerService _managerService;
 
-        public EmployeeController(IEmployeeService employeeService, IProjectService projectService)
+        public EmployeeController(IEmployeeService employeeService, IProjectService projectService, IManagerService managerService)
         {
             _employeeService = employeeService;
             _projectService = projectService;
+            _managerService = managerService;
+            
         }
 
         [HttpGet]
@@ -53,6 +57,7 @@ namespace EmployeeManager.Controllers
         {
             var edit = _employeeService.GetEmployeeByIdForEdit(id);
             edit.Projects = _projectService.GetProjectByEmployeeId(id);
+            edit.Managers = _managerService.GetListOfManagers();
             return View(edit);
         }
         [HttpPost]

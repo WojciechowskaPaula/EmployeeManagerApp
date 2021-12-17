@@ -30,6 +30,7 @@ namespace EmployeeManager
             services.AddControllersWithViews();
             services.AddTransient<IEmployeeService, EmployeeService>();
             services.AddTransient<IProjectService, ProjectService>();
+            services.AddTransient<IManagerService, ManagerService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

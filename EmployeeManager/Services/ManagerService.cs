@@ -1,5 +1,6 @@
 ﻿using EmployeeManager.Data;
 using EmployeeManager.Interfaces;
+using EmployeeManager.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +16,10 @@ namespace EmployeeManager.Services
             _dbContext = dbContext;
         }
 
-        
+        public List<Manager> GetListOfManagers()
+        {
+            var listOfManagers = _dbContext.Managers.ToList();
+            return listOfManagers;
+        }
     }
 }
