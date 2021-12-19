@@ -1,5 +1,6 @@
 ﻿using EmployeeManager.Interfaces;
 using EmployeeManager.Models;
+using EmployeeManager.Models.ViewHelpers;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
@@ -63,7 +64,7 @@ namespace EmployeeManager.Controllers
             {
                 var employee = _employeeService.GetEmployeeById(item.EmployeeId);
                 ManagerListInfo managerListInfo = new ManagerListInfo();
-                managerListInfo.EmployeeId = item.EmployeeId;
+                managerListInfo.ManagerId = item.ManagerId;
                 managerListInfo.FullName = $"{employee.FirstName} {employee.LastName}";
                 edit.Managers.Add(managerListInfo);
             }
