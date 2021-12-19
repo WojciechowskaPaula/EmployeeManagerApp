@@ -21,7 +21,7 @@ namespace EmployeeManager.Models.ViewModels
         [RegularExpression(@"\d{2}-\d{3}$", ErrorMessage = "Invalid Zip")]
         public string ZipCode { get; set; }
         public int ManagerId { get; set; }
-        public List<Manager> Managers { get; set; }
+        public List<ManagerListInfo> Managers { get; set; }
         public Position Position { get; set; }
         public List<Project> Projects { get; set; }
     }

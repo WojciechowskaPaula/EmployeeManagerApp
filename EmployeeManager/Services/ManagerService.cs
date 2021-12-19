@@ -19,6 +19,7 @@ namespace EmployeeManager.Services
         public List<Manager> GetListOfManagers()
         {
             var listOfManagers = _dbContext.Managers.ToList();
+            
             return listOfManagers;
         }
     }

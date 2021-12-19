@@ -57,7 +57,17 @@ namespace EmployeeManager.Controllers
         {
             var edit = _employeeService.GetEmployeeByIdForEdit(id);
             edit.Projects = _projectService.GetProjectByEmployeeId(id);
-            edit.Managers = _managerService.GetListOfManagers();
+            edit.Managers = new List<ManagerListInfo>();
+            var listOfManagers = _managerService.GetListOfManagers();
+            foreach (var item in listOfManagers)
+            {
+                var employee = _employeeService.GetEmployeeById(item.EmployeeId);
+                ManagerListInfo managerListInfo = new ManagerListInfo();
+                managerListInfo.EmployeeId = item.EmployeeId;
+                managerListInfo.FullName = $"{employee.FirstName} {employee.LastName}";
+                edit.Managers.Add(managerListInfo);
+            }
+            
             return View(edit);
         }
         [HttpPost]
