@@ -1,6 +1,8 @@
 ﻿using EmployeeManager.Interfaces;
 using EmployeeManager.Models;
+using EmployeeManager.Models.ViewHelpers;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,10 +13,12 @@ namespace EmployeeManager.Controllers
     public class ProjectController : Controller
     {
         private readonly IProjectService _projectService;
+        private readonly IEmployeeService _employeeService;
         
-        public ProjectController(IProjectService projectService)
+        public ProjectController(IProjectService projectService, IEmployeeService employeeService)
         {
             _projectService = projectService;
+            _employeeService = employeeService;
         }
 
         [HttpGet]
@@ -69,11 +73,24 @@ namespace EmployeeManager.Controllers
         [HttpGet]
         public IActionResult EditProjectForm(int id)
         {
-            var project = _projectService.GetProjectByProjectId(id);
-            project.Employees = _projectService.GetEmployeeByProjectId(id);
-            return View(project);
+            var projectVM = _projectService.GetProjectByProjectId(id);
+            var allEmployees = _employeeService.GetAllEmployees();
+            var allEmployeesFullName = allEmployees.Select(x => new
+            {
+                EmployeeId = x.EmployeeId,
+                FullName = $"{x.FirstName} {x.LastName}"
+            }).ToList();
+            ViewBag.Employees = new SelectList(allEmployeesFullName, "EmployeeId", "FullName");
+
+            projectVM.Employees = _projectService.GetEmployeeByProjectId(id);
+            return View(projectVM);
         }
 
+        public IActionResult AddEmployeeToProject(EmployeeProject employeeProject)
+        {
+            _projectService.AddEmployeeToProject(employeeProject);
+            return RedirectToAction("Index");
+        }
         [HttpPost]
         public IActionResult Update(Project project)
         {

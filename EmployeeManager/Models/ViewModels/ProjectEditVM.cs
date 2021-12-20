@@ -10,5 +10,6 @@ namespace EmployeeManager.Models.ViewModels
         public int ProjectId { get; set; }
         public string ProjectName { get; set; }
         public List<Employee> Employees { get; set; }
+        
     }
 }

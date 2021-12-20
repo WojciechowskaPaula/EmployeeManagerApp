@@ -18,5 +18,6 @@ namespace EmployeeManager.Interfaces
         List<Employee> GetEmployeeByProjectId(int projectId);
         Project UpdateProject(Project project);
         ProjectEditVM GetProjectByProjectId(int id);
+        void AddEmployeeToProject(EmployeeProject employeeProject);
     }
 }

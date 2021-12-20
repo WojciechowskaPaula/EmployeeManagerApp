@@ -14,7 +14,7 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="ProjectId" class="control-label"></label>
-                <input asp-for="ProjectId" class="form-control" readonly/>
+                <input asp-for="ProjectId" class="form-control" readonly />
                 <span asp-validation-for="ProjectId" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -22,13 +22,27 @@
                 <input asp-for="ProjectName" class="form-control" />
                 <span asp-validation-for="ProjectName" class="text-danger"></span>
             </div>
+
             <div class="form-group">
-                <input type="submit" asp-action ="Update" value="Save" class="btn btn-primary" />
+                <input type="submit" asp-action="Update" value="Save" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
-
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="AddEmployeeToProject" method="post">
+            <div class="form-group">
+                <label for="EmployeeId" class="control-label">Add Employee</label>
+                <select class="form-control" name="EmployeeId" asp-items="ViewBag.Employees"></select>
+                <input type="hidden" name="ProjectId" class="form-control" value="@Model.ProjectId" />
+            </div>
+            <div class="form-group">
+                <input type="submit" class="btn btn-info" value="Add" />
+            </div>
+        </form>
+    </div>
+</div>
 <div>
     <h4> Employee Projects:</h4>
     <table class="table">
@@ -48,7 +62,7 @@
                     <td>@item.EmployeeId </td>
                     <td>@item.FirstName</td>
                     <td>@item.LastName</td>
-                    <td><a class="btn btn-danger" asp-controller="Project"asp-action="DeleteFromEmployee" asp-route-employeeId ="@item.EmployeeId" asp-route-projectId="@Model.ProjectId">Delete</a></td>
+                    <td><a class="btn btn-danger" asp-controller="Project" asp-action="DeleteFromEmployee" asp-route-employeeId="@item.EmployeeId" asp-route-projectId="@Model.ProjectId">Delete</a></td>
                 </tr>
             }
         </tbody>

@@ -89,5 +89,11 @@ namespace EmployeeManager.Services
             return project;
         }
 
+        public void AddEmployeeToProject(EmployeeProject employeeProject)
+        {
+            _dbContext.EmployeeProject.Add(employeeProject);
+            _dbContext.SaveChanges();
+        }
+
     }
 }
