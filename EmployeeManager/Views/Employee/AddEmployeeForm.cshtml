@@ -1,4 +1,4 @@
-﻿@model EmployeeManager.Models.Employee
+﻿@model EmployeeManager.Models.ViewModels.EmployeeAddVM
 
 @{
     ViewData["Title"] = "AddNewEmployee";
@@ -32,7 +32,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="Gender" class="control-label"></label>
-                <input asp-for="Gender" class="form-control" />
+                <select asp-for="Gender" class="form-control" asp-items="@Html.GetEnumSelectList<GenderEnum>().SetValueToText()"> </select>
                 
             </div>
             <div class="form-group">
@@ -42,8 +42,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="Country" class="control-label"></label>
-                <input asp-for="Country" class="form-control" />
-                
+                <select asp-for="Country" class="form-control" asp-items="@Html.GetEnumSelectList<CountryEnum>().SetValueToText()"></select>
             </div>
             <div class="form-group">
                 <label asp-for="ZipCode" class="control-label"></label>
@@ -52,8 +51,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="ManagerId" class="control-label"></label>
-                <input asp-for="ManagerId" class="form-control" />
-                
+                <select asp-for="ManagerId" class="form-control" asp-items="@(new SelectList(Model.Managers, "ManagerId", "FullName"))"></select>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" asp-controller="Employee" asp-action="AddNewEmployee" />

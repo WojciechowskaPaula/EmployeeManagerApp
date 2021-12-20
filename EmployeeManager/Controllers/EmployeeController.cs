@@ -1,6 +1,7 @@
 ﻿using EmployeeManager.Interfaces;
 using EmployeeManager.Models;
 using EmployeeManager.Models.ViewHelpers;
+using EmployeeManager.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
@@ -44,7 +45,18 @@ namespace EmployeeManager.Controllers
         [HttpGet]
         public IActionResult AddEmployeeForm()
         {
-            return View();
+            EmployeeAddVM employeeAddVM = new EmployeeAddVM();
+            employeeAddVM.Managers = new List<ManagerListInfo>();
+            var listOfManagers = _managerService.GetListOfManagers();
+            foreach (var item in listOfManagers)
+            {
+                var employee = _employeeService.GetEmployeeById(item.EmployeeId);
+                ManagerListInfo managerListInfo = new ManagerListInfo();
+                managerListInfo.ManagerId = item.ManagerId;
+                managerListInfo.FullName = $"{employee.FirstName} {employee.LastName}";
+                employeeAddVM.Managers.Add(managerListInfo);
+            }
+            return View(employeeAddVM);
         }
         [HttpPost]
         public IActionResult AddNewEmployee(Employee employee)
