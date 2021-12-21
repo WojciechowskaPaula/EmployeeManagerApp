@@ -64,7 +64,7 @@ namespace EmployeeManager.Controllers
             return RedirectToAction("Index");
         }
 
-        
+        [HttpGet]
         public IActionResult DeleteFromEmployee(int projectId, int employeeId)
         {
             _projectService.DeleteProjectFromEmployee(projectId, employeeId);
@@ -85,7 +85,7 @@ namespace EmployeeManager.Controllers
             projectVM.Employees = _projectService.GetEmployeeByProjectId(id);
             return View(projectVM);
         }
-
+        [HttpPost]
         public IActionResult AddEmployeeToProject(EmployeeProject employeeProject)
         {
             _projectService.AddEmployeeToProject(employeeProject);

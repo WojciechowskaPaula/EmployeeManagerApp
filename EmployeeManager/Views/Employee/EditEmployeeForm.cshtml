@@ -87,6 +87,7 @@
         <tr>
             <th scope="col">Project Id</th>
             <th scope="col">Project Name</th>
+            <th scope="col">Delete</th>
         </tr>
     </thead>
     <tbody>
@@ -95,17 +96,12 @@
             <tr>
                 <td>@item.ProjectId </td>
                 <td>@item.ProjectName</td>
+                <td><a class="btn btn-danger" asp-controller="Employee" asp-action="DeleteProjectFromEmployee" asp-route-employeeId="@Model.EmployeeId" asp-route-projectId="@item.ProjectId">Delete</a></td>
             </tr>
         }
     </tbody>
 </table>
    
-
-
-
-
-
-
 <div>
     <a asp-action="Index">Back to List</a>
 </div>

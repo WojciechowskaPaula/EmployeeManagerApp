@@ -117,5 +117,13 @@ namespace EmployeeManager.Controllers
             _projectService.AddEmployeeToProject(employeeProject);
             return RedirectToAction("Index");
         }
+
+        [HttpGet]
+        public IActionResult DeleteProjectFromEmployee(int projectID, int employeeId)
+        {
+            _projectService.DeleteProjectFromEmployee(projectID, employeeId);
+            return RedirectToAction("EditemployeeForm", new { id = employeeId });
+        }
+
     }
 }

@@ -60,7 +60,7 @@ namespace EmployeeManager.Services
             _dbContext.Remove(project);
             _dbContext.SaveChanges();
         }
-       
+
         public Project AddNewProject(Project project)
         {
             var newProject = new Project();
