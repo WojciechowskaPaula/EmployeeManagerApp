@@ -81,6 +81,7 @@ namespace EmployeeManager.Controllers
                 edit.Managers.Add(managerListInfo);
             }
             var listOfProjects = _projectService.GetListOfProjects();
+            listOfProjects = listOfProjects.Except(edit.Projects).ToList();
             var namesOfProjects = listOfProjects.Select(x => new
             {
                 ProjectId = x.ProjectId,

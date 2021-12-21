@@ -75,6 +75,9 @@ namespace EmployeeManager.Controllers
         {
             var projectVM = _projectService.GetProjectByProjectId(id);
             var allEmployees = _employeeService.GetAllEmployees();
+            projectVM.Employees = _projectService.GetEmployeeByProjectId(id);
+            allEmployees = allEmployees.Except(projectVM.Employees).ToList();
+            
             var allEmployeesFullName = allEmployees.Select(x => new
             {
                 EmployeeId = x.EmployeeId,
@@ -82,7 +85,6 @@ namespace EmployeeManager.Controllers
             }).ToList();
             ViewBag.Employees = new SelectList(allEmployeesFullName, "EmployeeId", "FullName");
 
-            projectVM.Employees = _projectService.GetEmployeeByProjectId(id);
             return View(projectVM);
         }
         [HttpPost]
