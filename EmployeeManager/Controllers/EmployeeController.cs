@@ -80,7 +80,13 @@ namespace EmployeeManager.Controllers
                 managerListInfo.FullName = $"{employee.FirstName} {employee.LastName}";
                 edit.Managers.Add(managerListInfo);
             }
-            
+            var listOfProjects = _projectService.GetListOfProjects();
+            var namesOfProjects = listOfProjects.Select(x => new
+            {
+                ProjectId = x.ProjectId,
+                ProjectName = x.ProjectName
+            });
+            ViewBag.Projects = new SelectList(namesOfProjects, "ProjectId", "ProjectName");
             return View(edit);
         }
         [HttpPost]
@@ -102,6 +108,13 @@ namespace EmployeeManager.Controllers
         {
              _employeeService.Delete(id);
            
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public IActionResult AddProjectToEmployee(EmployeeProject employeeProject)
+        {
+            _projectService.AddEmployeeToProject(employeeProject);
             return RedirectToAction("Index");
         }
     }

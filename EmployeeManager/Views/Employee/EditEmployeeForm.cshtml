@@ -55,35 +55,56 @@
                 <select asp-for="ManagerId" class="form-control" asp-items="@(new SelectList(Model.Managers,"ManagerId","FullName"))"></select>
                 <span asp-validation-for="ManagerId" class="text-danger"></span>
             </div>
-            <div>
-                <h3> Employee Projects:</h3>
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th scope="col">Project Id</th>
-                            <th scope="col">Project Name</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var item in Model.Projects)
-                        {
-                            <tr>
-                                <td>@item.ProjectId </td>
-                                <td>@item.ProjectName</td>
-                            </tr>
-                        }
-                    </tbody>
-                </table>
-            </div>
 
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>
-
         </form>
-
     </div>
 </div>
+<div>
+
+    <div class="row">
+        <div class="col-md-4">
+            <form asp-action="AddProjectToEmployee" method="post">
+                <div class="form-group">
+                    <label for="ProjectId" class="control-label">Project Name</label>
+                    <select class="form-control" name="ProjectId" asp-items="ViewBag.Projects"></select>
+                    <input type="hidden" name="EmployeeId" class="form-control" value="@Model.EmployeeId" />
+                </div>
+                <div>
+                    <input type="submit" class="btn btn-info" value="Add" />
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+
+<h3> Employee Projects:</h3>
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Project Id</th>
+            <th scope="col">Project Name</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Projects)
+        {
+            <tr>
+                <td>@item.ProjectId </td>
+                <td>@item.ProjectName</td>
+            </tr>
+        }
+    </tbody>
+</table>
+   
+
+
+
+
+
 
 <div>
     <a asp-action="Index">Back to List</a>
