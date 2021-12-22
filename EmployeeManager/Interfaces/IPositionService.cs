@@ -1,11 +1,13 @@
-﻿using System;
+﻿using EmployeeManager.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace EmployeeManager.Interfaces
 {
-    interface IPositionService
+     public interface IPositionService
     {
+        List<Position> GetListOfPositions();
     }
 }
