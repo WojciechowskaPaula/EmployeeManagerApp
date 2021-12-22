@@ -30,9 +30,6 @@ namespace EmployeeManager.Data
             modelBuilder.Entity<Manager>()
                 .HasMany(x => x.Employees).WithOne(y => y.Manager)
                 .HasForeignKey(a => a.ManagerId);
-            modelBuilder.Entity<Employee>()
-                .HasOne(x => x.Position).WithOne(y => y.Employee)
-                .HasForeignKey<Position>(x => x.EmployeeId);
         }
     }
 }

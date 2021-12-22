@@ -9,7 +9,7 @@ namespace EmployeeManager.Models
     {
         public int PositionId { get; set; }
         public string PositionName { get; set; }
-        public int EmployeeId { get; set; }
-        public Employee Employee { get; set; }
+        public JobHistory JobHistory { get; set; }
+        
     }
 }

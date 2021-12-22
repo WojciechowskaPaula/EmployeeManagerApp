@@ -10,6 +10,7 @@ namespace EmployeeManager.Models
         
         public int JobHistoryId { get; set; }
         public int PositionId { get; set; }
+        ICollection <Position> Positions { get; set; }
         public DateTime HireDate { get; set; }
         public DateTime? EndDate { get; set; }
         public double Salary { get; set; }
