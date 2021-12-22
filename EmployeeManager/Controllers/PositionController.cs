@@ -1,4 +1,5 @@
 ﻿using EmployeeManager.Interfaces;
+using EmployeeManager.Models;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -14,10 +15,23 @@ namespace EmployeeManager.Controllers
         {
             _positionService = positionService;
         }
+        [HttpGet]
         public IActionResult Index()
         {
            var positions = _positionService.GetListOfPositions();
             return View(positions);
+        }
+
+        [HttpGet]
+        public IActionResult AddNewPositionForm()
+        {
+            return View();
+        }
+
+        public IActionResult AddNewPosition(Position position)
+        {
+           var newPosition = _positionService.AddNewPosition(position);
+            return RedirectToAction("Index");
         }
     }
 }
