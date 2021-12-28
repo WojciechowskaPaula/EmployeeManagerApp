@@ -42,5 +42,19 @@ namespace EmployeeManager.Controllers
             return View(details);
         }
 
+        [HttpGet]
+        public IActionResult DeleteAndConfirm(int positionId)
+        {
+            var positionToDelete = _positionService.DisplayPositionDetails(positionId);
+            return View(positionToDelete);
+        }
+
+        [HttpPost]
+        public IActionResult Delete (int positionId)
+        {
+            _positionService.DeletePosition(positionId);
+            return RedirectToAction("Index");
+        }
+
     }
 }

@@ -40,10 +40,16 @@ namespace EmployeeManager.Services
             positionDetails.PositionId = position.PositionId;
             positionDetails.PositionName = position.PositionName;
             return positionDetails;
-
         }
-       
-       
+
+        public void DeletePosition(int positionId)
+        {
+            var positionToRemove = _dbContext.Positions.FirstOrDefault(x => x.PositionId == positionId);
+            _dbContext.Positions.Remove(positionToRemove);
+            _dbContext.SaveChanges();
+        }
+
+
 
     }
 }

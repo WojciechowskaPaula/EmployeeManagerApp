@@ -12,6 +12,7 @@ namespace EmployeeManager.Interfaces
         List<Position> GetListOfPositions();
         PositionAddVM AddNewPosition(Position position);
         PositionDetailsVM DisplayPositionDetails(int positionId);
+        void DeletePosition(int positionId);
 
     }
 }
