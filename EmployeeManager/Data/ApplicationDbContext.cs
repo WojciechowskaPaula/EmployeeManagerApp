@@ -19,6 +19,7 @@ namespace EmployeeManager.Data
         public DbSet<Manager> Managers { get; set; }
         public DbSet<Position> Positions { get; set; }
         public DbSet<EmployeeProject> EmployeeProject { get; set; }
+        public DbSet<JobHistoryPosition> JobHistoryPosition { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -30,6 +31,7 @@ namespace EmployeeManager.Data
             modelBuilder.Entity<Manager>()
                 .HasMany(x => x.Employees).WithOne(y => y.Manager)
                 .HasForeignKey(a => a.ManagerId);
+            modelBuilder.Entity<JobHistoryPosition>().HasKey(x => new { x.JobHistoryId, x.PositionId });
         }
     }
 }

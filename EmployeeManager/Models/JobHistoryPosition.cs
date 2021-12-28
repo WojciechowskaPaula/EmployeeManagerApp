@@ -5,11 +5,11 @@ using System.Threading.Tasks;
 
 namespace EmployeeManager.Models
 {
-    public class Position
+    public class JobHistoryPosition
     {
+        public int JobHistoryId { get; set; }
+        public JobHistory JobHistory { get; set; }
         public int PositionId { get; set; }
-        public string PositionName { get; set; }
-        public ICollection<JobHistory> JobHistories { get; set; }
-        
+        public Position Position { get; set; }
     }
 }
