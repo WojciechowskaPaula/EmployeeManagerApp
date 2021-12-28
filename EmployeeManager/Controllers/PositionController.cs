@@ -28,10 +28,19 @@ namespace EmployeeManager.Controllers
             return View();
         }
 
+        [HttpGet]
         public IActionResult AddNewPosition(Position position)
         {
            var newPosition = _positionService.AddNewPosition(position);
             return RedirectToAction("Index");
         }
+
+        [HttpGet]
+       public IActionResult DisplayPositionDetails(int positionId)
+        {
+            var details = _positionService.DisplayPositionDetails(positionId);
+            return View(details);
+        }
+
     }
 }

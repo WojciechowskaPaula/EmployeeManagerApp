@@ -33,5 +33,17 @@ namespace EmployeeManager.Services
             return newPosition;
         }
 
+        public PositionDetailsVM DisplayPositionDetails(int positionId)
+        {
+            var position = _dbContext.Positions.FirstOrDefault(x => x.PositionId == positionId);
+            PositionDetailsVM positionDetails = new PositionDetailsVM();
+            positionDetails.PositionId = position.PositionId;
+            positionDetails.PositionName = position.PositionName;
+            return positionDetails;
+
+        }
+       
+       
+
     }
 }
