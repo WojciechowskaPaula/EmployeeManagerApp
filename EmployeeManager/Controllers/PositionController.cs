@@ -55,6 +55,17 @@ namespace EmployeeManager.Controllers
             _positionService.DeletePosition(positionId);
             return RedirectToAction("Index");
         }
-
+        [HttpGet]
+        public IActionResult EditPosition(int positionId)
+        {
+            var details = _positionService.DisplayPositionDetails(positionId);
+            return View(details);
+        }
+        [HttpPost]
+        public IActionResult Update(Position position)
+        {
+           _positionService.UpdatePosition(position);
+            return RedirectToAction("Index");
+        }
     }
 }

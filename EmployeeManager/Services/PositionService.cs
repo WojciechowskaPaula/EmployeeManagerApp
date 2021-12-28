@@ -49,6 +49,14 @@ namespace EmployeeManager.Services
             _dbContext.SaveChanges();
         }
 
+        public void UpdatePosition(Position position)
+        {
+            var positionToEdit = _dbContext.Positions.FirstOrDefault(x => x.PositionId == position.PositionId);
+            positionToEdit.PositionName = position.PositionName;
+            _dbContext.SaveChanges();
+        }
+
+        
 
 
     }

@@ -31,7 +31,7 @@
                 @Html.DisplayFor(modelItem => item.PositionName)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Edit", "EditPosition", new { positionId = item.PositionId }) |
                 @Html.ActionLink("Details", "DisplayPositionDetails", new { positionId = item.PositionId}) |
                 @Html.ActionLink("Delete", "DeleteAndConfirm", new { positionId = item.PositionId })
             </td>

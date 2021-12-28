@@ -13,6 +13,7 @@ namespace EmployeeManager.Interfaces
         PositionAddVM AddNewPosition(Position position);
         PositionDetailsVM DisplayPositionDetails(int positionId);
         void DeletePosition(int positionId);
+        void UpdatePosition(Position position);
 
     }
 }
