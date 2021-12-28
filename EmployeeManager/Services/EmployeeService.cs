@@ -100,7 +100,10 @@ namespace EmployeeManager.Services
             employeeEditVm.Country = employee.Country;
             employeeEditVm.ZipCode = employee.ZipCode;
             employeeEditVm.ManagerId = employee.ManagerId;
-            employeeEditVm.Position = employee.Position;
+            employeeEditVm.Position = _dbContext.JobHistoryPosition.Where(x => x.JobHistory.EmployeeId == id).Select(x => x.Position).FirstOrDefault();
+            var test = _dbContext.JobHistories.Where(x => x.EmployeeId == id);
+
+
             return employeeEditVm;
         }
     }
