@@ -3,38 +3,28 @@
 @{
     ViewData["Title"] = "Index";
 }
-
-<h1>Index</h1>
-
+<h3>List of all positions in the company:</h3>
 <p>
-    <a asp-action="AddNewPositionForm">Create New</a>
+    <a class="btn btn-success"asp-action="AddNewPositionForm">Create New</a>
 </p>
 <table class="table">
     <thead>
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.PositionId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.PositionName)
-            </th>
-            <th></th>
+            <th scope="col">Position Id</th>
+            <th scope="col">Position Name</th>
+            <th scope="col">Edit</th>
+            <th scope="col">Details</th>
+            <th scope="col">Delete</th>
         </tr>
     </thead>
     <tbody>
 @foreach (var item in Model) {
         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.PositionId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PositionName)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "EditPosition", new { positionId = item.PositionId }) |
-                @Html.ActionLink("Details", "DisplayPositionDetails", new { positionId = item.PositionId}) |
-                @Html.ActionLink("Delete", "DeleteAndConfirm", new { positionId = item.PositionId })
-            </td>
+            <td>@item.PositionId</td>
+            <td>@item.PositionName</td>
+            <td><a class="btn btn-info" asp-action="EditPosition"asp-route-positionId="@item.PositionId ">Edit</a></td>
+            <td><a class="btn btn-dark" asp-action="DisplayPositionDetails" asp-route-positionId="@item.PositionId">Details</a></td>
+            <td><a class="btn btn-danger"asp-action="DeleteAndConfirm" asp-route-positionId="@item.PositionId">Delete</a></td>
         </tr>
 }
     </tbody>
