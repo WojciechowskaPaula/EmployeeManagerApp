@@ -23,6 +23,6 @@
     </dl>
 </div>
 <div>
-    @Html.ActionLink("Edit", "EditPosition", new { positionId = Model.PositionId }) |
-    <a asp-action="Index">Back to List</a>
+    @Html.ActionLink("Edit", "EditPosition", new { positionId = Model.PositionId }, new { @class = "btn btn-info" })
+    <a class="btn btn-secondary" asp-action="Index">Back to List</a>
 </div>

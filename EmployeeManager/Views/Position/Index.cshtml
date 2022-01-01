@@ -22,7 +22,7 @@
         <tr>
             <td>@item.PositionId</td>
             <td>@item.PositionName</td>
-            <td><a class="btn btn-info" asp-action="EditPosition"asp-route-positionId="@item.PositionId ">Edit</a></td>
+            <td><a class="btn btn-primary" asp-action="EditPosition"asp-route-positionId="@item.PositionId ">Edit</a></td>
             <td><a class="btn btn-dark" asp-action="DisplayPositionDetails" asp-route-positionId="@item.PositionId">Details</a></td>
             <td><a class="btn btn-danger"asp-action="DeleteAndConfirm" asp-route-positionId="@item.PositionId">Delete</a></td>
         </tr>
