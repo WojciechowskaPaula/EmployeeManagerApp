@@ -56,7 +56,12 @@ namespace EmployeeManager.Services
             _dbContext.SaveChanges();
         }
 
-        
+        public Position GetPositionByEmployee(int employeeId)
+        {
+            var positionId = _dbContext.JobHistoryPosition.Where(x => x.JobHistory.EmployeeId == employeeId).OrderBy(y => y.JobHistory.EndDate).FirstOrDefault().PositionId;
+            var position = _dbContext.Positions.FirstOrDefault(x => x.PositionId == positionId);
+            return position;
+        }
 
 
     }

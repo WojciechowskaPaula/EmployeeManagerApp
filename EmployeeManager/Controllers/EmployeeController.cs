@@ -2,6 +2,7 @@
 using EmployeeManager.Models;
 using EmployeeManager.Models.ViewHelpers;
 using EmployeeManager.Models.ViewModels;
+using EmployeeManager.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
@@ -16,12 +17,14 @@ namespace EmployeeManager.Controllers
         private readonly IEmployeeService _employeeService;
         private readonly IProjectService _projectService;
         private readonly IManagerService _managerService;
+        private readonly IPositionService _positionService;
 
-        public EmployeeController(IEmployeeService employeeService, IProjectService projectService, IManagerService managerService)
+        public EmployeeController(IEmployeeService employeeService, IProjectService projectService, IManagerService managerService, IPositionService positionService )
         {
             _employeeService = employeeService;
             _projectService = projectService;
             _managerService = managerService;
+            _positionService = positionService;
             
         }
 
@@ -36,9 +39,11 @@ namespace EmployeeManager.Controllers
         public IActionResult Details(int id)
         {
             var employeeProject = _projectService.GetProjectByEmployeeId(id);
+            var employeePosition = _positionService.GetPositionByEmployee(id);
             var details = _employeeService.GetEmployeeDetail(id);
             
             details.Projects = employeeProject;
+            details.Position = employeePosition;
             return View(details);
         }
         

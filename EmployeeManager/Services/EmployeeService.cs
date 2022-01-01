@@ -34,8 +34,6 @@ namespace EmployeeManager.Services
             vm.Country = detail.Country;
             vm.ZipCode = detail.ZipCode;
             vm.ManagerId = detail.ManagerId;
-            vm.Position = detail.Position;
-            
             return vm;
         }
         

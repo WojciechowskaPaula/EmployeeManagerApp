@@ -14,6 +14,7 @@ namespace EmployeeManager.Interfaces
         PositionDetailsVM DisplayPositionDetails(int positionId);
         void DeletePosition(int positionId);
         void UpdatePosition(Position position);
+        Position GetPositionByEmployee(int employeeId);
 
     }
 }
