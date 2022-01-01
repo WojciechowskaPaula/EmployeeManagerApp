@@ -4,10 +4,10 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h3> List of all Employees</h3>
 
 <p>
-    <a asp-action="AddEmployeeForm">Create New</a>
+    <a class="btn btn-success" asp-action="AddEmployeeForm">Create New</a>
 </p>
 <table class="table">
     <thead>
@@ -39,7 +39,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.ManagerId)
             </th>
-            <th></th>
+            <th>Edit</th>
+            <th>Details</th>
+            <th>Delete</th>
         </tr>
     </thead>
     <tbody>
@@ -72,11 +74,9 @@
             <td>
                 @Html.DisplayFor(modelItem => item.ManagerId)
             </td>
-            <td>
-                @Html.ActionLink("Edit", "EditEmployeeForm", new { id = item.EmployeeId }) |
-                @Html.ActionLink("Details", "Details", new { id = item.EmployeeId }) |
-                @Html.ActionLink("Delete", "DeleteAndConfirm", new { id=item.EmployeeId })
-            </td>
+            <td>@Html.ActionLink("Edit", "EditEmployeeForm", new { id = item.EmployeeId }, new { @class = "btn btn-primary"})</td> 
+               <td> @Html.ActionLink("Details", "Details", new { id = item.EmployeeId }, new { @class = "btn btn-dark"})</td>
+               <td> @Html.ActionLink("Delete", "DeleteAndConfirm", new { id=item.EmployeeId }, new { @class = "btn btn-danger"})</td>
         </tr>
 }
     </tbody>
