@@ -4,38 +4,35 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1>All Projects</h1>
 
 <p>
-    <a asp-action="AddNewProject">Create New</a>
+    <a class="btn btn-success" asp-action="AddNewProject">Create New</a>
 </p>
 <table class="table">
     <thead>
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.ProjectId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ProjectName)
-            </th>
-            <th></th>
+            <th>Project Id</th>
+            <th>Project Name</th>
+            <th>Edit</th>
+            <th>Details</th>
+            <th>Delete</th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.ProjectId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ProjectName)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "EditProjectForm", new { id= item.ProjectId }) |
-                @Html.ActionLink("Details", "Details", new { id=item.ProjectId }) |
-                @Html.ActionLink("Delete", "DeleteAndConfirm", new { projectId = item.ProjectId})
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ProjectId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ProjectName)
+                </td>
+                <td>@Html.ActionLink("Edit", "EditProjectForm", new { id = item.ProjectId }, new { @class = "btn btn-primary" })</td>
+                <td>@Html.ActionLink("Details", "Details", new { id = item.ProjectId }, new { @class = "btn btn-dark" })</td>
+                <td>@Html.ActionLink("Delete", "DeleteAndConfirm", new { projectId = item.ProjectId }, new { @class = "btn btn-danger" })</td>
+            </tr>
+        }
     </tbody>
 </table>
