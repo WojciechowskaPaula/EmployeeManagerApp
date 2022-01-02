@@ -36,7 +36,7 @@ namespace EmployeeManager.Services
             vm.ManagerId = detail.ManagerId;
             return vm;
         }
-        
+
         public Employee AddNewEmployee(Employee employee)
         {
             var newEmployee = new Employee();
@@ -57,13 +57,23 @@ namespace EmployeeManager.Services
 
         public Employee GetEmployeeById(int id)
         {
-           var employee =  _dbContext.Employees.FirstOrDefault(x => x.EmployeeId == id);
+            var employee = _dbContext.Employees.FirstOrDefault(x => x.EmployeeId == id);
             return employee;
         }
         public Employee UpdateEmployee(Employee employee)
         {
             var oldEmployee = _dbContext.Employees.FirstOrDefault(x => x.EmployeeId == employee.EmployeeId);
-           
+            if (oldEmployee.Position != employee.Position)
+            {
+                var employeePosition = _dbContext.JobHistories.Where(x => x.EmployeeId == employee.EmployeeId).FirstOrDefault();
+                
+                JobHistoryPosition jobHistoryPosition = new JobHistoryPosition();
+                jobHistoryPosition.JobHistoryId = employeePosition.JobHistoryId;
+                var positionId = int.Parse(employee.Position.PositionName);
+                jobHistoryPosition.PositionId = positionId;
+                _dbContext.JobHistoryPosition.Add(jobHistoryPosition);
+                _dbContext.SaveChanges();
+            }
             oldEmployee.EmployeeId = employee.EmployeeId;
             oldEmployee.FirstName = employee.FirstName;
             oldEmployee.LastName = employee.LastName;
@@ -73,11 +83,11 @@ namespace EmployeeManager.Services
             oldEmployee.Country = employee.Country;
             oldEmployee.ZipCode = employee.ZipCode;
             oldEmployee.ManagerId = employee.ManagerId;
-            oldEmployee.Position = employee.Position;
+
             _dbContext.SaveChanges();
             return employee;
         }
-       
+
         public void Delete(int id)
         {
             var employee = _dbContext.Employees.FirstOrDefault(x => x.EmployeeId == id);
@@ -106,5 +116,5 @@ namespace EmployeeManager.Services
         }
     }
 
-    
+
 }

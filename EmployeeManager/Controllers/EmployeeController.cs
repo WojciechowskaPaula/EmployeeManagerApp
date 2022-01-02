@@ -76,6 +76,10 @@ namespace EmployeeManager.Controllers
             var edit = _employeeService.GetEmployeeByIdForEdit(id);
             edit.Projects = _projectService.GetProjectByEmployeeId(id);
             edit.Managers = new List<ManagerListInfo>();
+            edit.Positions = _positionService.GetListOfPositions();
+            var employeePosition = _positionService.GetPositionByEmployee(id);
+            
+            
             var listOfManagers = _managerService.GetListOfManagers();
             foreach (var item in listOfManagers)
             {
@@ -93,6 +97,18 @@ namespace EmployeeManager.Controllers
                 ProjectName = x.ProjectName
             });
             ViewBag.Projects = new SelectList(namesOfProjects, "ProjectId", "ProjectName");
+
+            //positions = positions.Except(employeePosition).ToList();
+            var namesOfPositions = edit.Positions.Select(x => new
+            {
+                PositionId= x.PositionId,
+                PositionName = x.PositionName
+            });
+            
+             var positionSelectList =  new SelectList(namesOfPositions, "PositionId", "PositionName");
+            var selectedValue = positionSelectList.Where(x => x.Value == employeePosition.PositionId.ToString()).FirstOrDefault();
+            selectedValue.Selected = true;
+            ViewBag.Positions = positionSelectList;
             return View(edit);
         }
         [HttpPost]

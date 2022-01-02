@@ -24,6 +24,7 @@ namespace EmployeeManager.Models.ViewModels
         public int ManagerId { get; set; }
         public List<ManagerListInfo> Managers { get; set; }
         public Position Position { get; set; }
+        public List <Position> Positions { get; set; }
         public List<Project> Projects { get; set; }
     }
 }
