@@ -66,7 +66,9 @@ namespace EmployeeManager.Services
             if (oldEmployee.Position != employee.Position)
             {
                 var employeePosition = _dbContext.JobHistories.Where(x => x.EmployeeId == employee.EmployeeId).FirstOrDefault();
-                
+                var oldPosition = _dbContext.JobHistoryPosition.Where(x =>x.JobHistoryId == oldEmployee.JobHistory.JobHistoryId).FirstOrDefault();
+                _dbContext.JobHistoryPosition.Remove(oldPosition);
+
                 JobHistoryPosition jobHistoryPosition = new JobHistoryPosition();
                 jobHistoryPosition.JobHistoryId = employeePosition.JobHistoryId;
                 var positionId = int.Parse(employee.Position.PositionName);
