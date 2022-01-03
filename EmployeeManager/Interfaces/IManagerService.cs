@@ -9,5 +9,6 @@ namespace EmployeeManager.Interfaces
     public interface IManagerService
     {
         List<Manager> GetListOfManagers();
+        Manager DisplayDetails(int id);
     }
 }

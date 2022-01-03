@@ -19,5 +19,11 @@ namespace EmployeeManager.Controllers
             var listOfManagers = _managerService.GetListOfManagers();
             return View(listOfManagers);
         }
+
+        public IActionResult Details(int id)
+        {
+            var managerDetails = _managerService.DisplayDetails(id);
+            return View(managerDetails);
+        }
     }
 }

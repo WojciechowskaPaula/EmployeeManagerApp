@@ -22,6 +22,18 @@ namespace EmployeeManager.Services
             
             return listOfManagers;
         }
+
+        public Manager DisplayDetails(int id)
+        {
+            var managerDetails = _dbContext.Managers.FirstOrDefault(x => x.EmployeeId == id);
+            Manager manager = new Manager();
+            manager.ManagerId = managerDetails.ManagerId;
+            manager.RoomNumber = managerDetails.RoomNumber;
+            manager.EmployeeId = managerDetails.EmployeeId;
+            return manager;
+        }
+
+
        
     }
 }
