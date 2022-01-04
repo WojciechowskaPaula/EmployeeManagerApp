@@ -57,5 +57,19 @@ namespace EmployeeManager.Controllers
             return RedirectToAction("Index");
         }
 
+        [HttpGet]
+        public IActionResult DeleteandConfirm(int id)
+        {
+            var managerToRemove =_managerService.DisplayDetails(id);
+            return View(managerToRemove);
+        }
+
+        [HttpPost]
+        public IActionResult Delete(int id)
+        {
+            _managerService.DeleteManager(id);
+            return RedirectToAction("Index");
+        }
+
     }
 }

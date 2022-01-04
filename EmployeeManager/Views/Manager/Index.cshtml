@@ -35,7 +35,7 @@
                 <td>@Html.DisplayFor(modelItem => item.EmployeeId)</td>
                 <td>@Html.ActionLink("Edit", "Edit", new { id = item.ManagerId }, new { @class = "btn btn-primary" })</td>
                 <td>@Html.ActionLink("Details", "Details", new { id = item.ManagerId }, new { @class = "btn btn-dark" })</td>
-                <td>@Html.ActionLink("Delete", "Delete", new { id = item.ManagerId }, new { @class = "btn btn-danger" })</td>
+                <td>@Html.ActionLink("Delete", "DeleteandConfirm", new { id = item.ManagerId }, new { @class = "btn btn-danger" })</td>
             </tr>
         }
     </tbody>

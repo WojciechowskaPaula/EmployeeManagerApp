@@ -10,9 +10,11 @@ namespace EmployeeManager.Interfaces
     public interface IManagerService
     {
         List<Manager> GetListOfManagers();
-        Manager DisplayDetails(int id);
+        ManagerDetailVM DisplayDetails(int id);
         ManagerEditVM GetMangerByIdForEdit(int id);
         Manager Update(Manager manager);
         Manager AddNewManager(ManagerEditVM managerEditVM);
+        Manager GetManagerById(int id);
+        void DeleteManager(int id);
     }
 }
