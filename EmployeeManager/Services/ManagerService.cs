@@ -24,14 +24,14 @@ namespace EmployeeManager.Services
             return listOfManagers;
         }
 
-        public Manager DisplayDetails(int id)
+        public ManagerDetailVM DisplayDetails(int id)
         {
             var managerDetails = _dbContext.Managers.FirstOrDefault(x => x.ManagerId == id);
-            Manager manager = new Manager();
-            manager.ManagerId = managerDetails.ManagerId;
-            manager.RoomNumber = managerDetails.RoomNumber;
-            manager.EmployeeId = managerDetails.EmployeeId;
-            return manager;
+            var managerVM = new ManagerDetailVM();
+            managerVM.ManagerId = managerDetails.ManagerId;
+            managerVM.RoomNumber = managerDetails.RoomNumber;
+            managerVM.EmployeeId = managerDetails.EmployeeId;
+            return managerVM;
         }
         public ManagerEditVM GetMangerByIdForEdit(int id)
         {
@@ -62,6 +62,18 @@ namespace EmployeeManager.Services
            _dbContext.Managers.Add(newManager);
             _dbContext.SaveChanges();
             return newManager;
+        }
+
+        public Manager GetManagerById(int id)
+        {
+            var manager = _dbContext.Managers.FirstOrDefault(x => x.ManagerId == id);
+            return manager;
+        }
+        public void DeleteManager (int id)
+        {
+            var managerToRemove = _dbContext.Managers.FirstOrDefault(x => x.ManagerId == id);
+            _dbContext.Managers.Remove(managerToRemove);
+            _dbContext.SaveChanges();
         }
     }
 }
