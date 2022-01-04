@@ -1,4 +1,5 @@
 ﻿using EmployeeManager.Interfaces;
+using EmployeeManager.Models;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -14,16 +15,25 @@ namespace EmployeeManager.Controllers
         {
             _managerService = managerService;
         }
+
+        [HttpGet]
         public IActionResult Index()
         {
             var listOfManagers = _managerService.GetListOfManagers();
             return View(listOfManagers);
         }
 
+        [HttpGet]
         public IActionResult Details(int id)
         {
             var managerDetails = _managerService.DisplayDetails(id);
             return View(managerDetails);
+        }
+
+        [HttpGet]
+        public IActionResult Edit()
+        {
+            return View();
         }
     }
 }

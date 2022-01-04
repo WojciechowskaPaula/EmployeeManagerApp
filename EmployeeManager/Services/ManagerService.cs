@@ -32,8 +32,5 @@ namespace EmployeeManager.Services
             manager.EmployeeId = managerDetails.EmployeeId;
             return manager;
         }
-
-
-       
     }
 }
