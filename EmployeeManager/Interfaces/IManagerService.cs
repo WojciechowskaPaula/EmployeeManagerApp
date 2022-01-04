@@ -1,4 +1,5 @@
 ﻿using EmployeeManager.Models;
+using EmployeeManager.Models.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,5 +11,7 @@ namespace EmployeeManager.Interfaces
     {
         List<Manager> GetListOfManagers();
         Manager DisplayDetails(int id);
+        ManagerEditVM GetMangerByIdForEdit(int id);
+        Manager Update(Manager manager);
     }
 }

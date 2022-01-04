@@ -31,9 +31,18 @@ namespace EmployeeManager.Controllers
         }
 
         [HttpGet]
-        public IActionResult Edit()
+        public IActionResult Edit(int id)
         {
-            return View();
+            var manager = _managerService.GetMangerByIdForEdit(id);
+            return View(manager);
         }
+        
+        [HttpPost]
+        public IActionResult Edit(Manager manager)
+        {
+            _managerService.Update(manager);
+            return RedirectToAction("Index");
+        }
+
     }
 }
