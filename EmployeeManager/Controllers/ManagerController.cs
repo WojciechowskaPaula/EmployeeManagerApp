@@ -1,5 +1,6 @@
 ﻿using EmployeeManager.Interfaces;
 using EmployeeManager.Models;
+using EmployeeManager.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -41,6 +42,18 @@ namespace EmployeeManager.Controllers
         public IActionResult Edit(Manager manager)
         {
             _managerService.Update(manager);
+            return RedirectToAction("Index");
+        }
+        [HttpGet]
+        public IActionResult AddNewManagerForm()
+        {
+            return View();
+        }
+        
+        [HttpPost]
+        public IActionResult AddNewManager(ManagerEditVM managerVM)
+        {
+            _managerService.AddNewManager(managerVM);
             return RedirectToAction("Index");
         }
 

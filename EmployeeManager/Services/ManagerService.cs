@@ -52,5 +52,16 @@ namespace EmployeeManager.Services
             _dbContext.SaveChanges();
             return manager;
         }
+        
+        public Manager AddNewManager(ManagerEditVM managerVM)
+        {
+            Manager newManager = new Manager();
+            newManager.ManagerId = managerVM.ManagerId;
+            newManager.RoomNumber = managerVM.RoomNumber;
+            newManager.EmployeeId = managerVM.EmployeeId;
+           _dbContext.Managers.Add(newManager);
+            _dbContext.SaveChanges();
+            return newManager;
+        }
     }
 }

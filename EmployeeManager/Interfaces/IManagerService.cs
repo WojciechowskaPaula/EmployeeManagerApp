@@ -13,5 +13,6 @@ namespace EmployeeManager.Interfaces
         Manager DisplayDetails(int id);
         ManagerEditVM GetMangerByIdForEdit(int id);
         Manager Update(Manager manager);
+        Manager AddNewManager(ManagerEditVM managerEditVM);
     }
 }
