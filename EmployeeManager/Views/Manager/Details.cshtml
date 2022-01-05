@@ -29,6 +29,27 @@
         </dd>
     </dl>
 </div>
+<hr />
+<br />
+<table class="table">
+    <thead>
+        <tr>
+            <th>Employee Id</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Employees)
+        {
+            <tr>
+                <td>@item.EmployeeId</td>
+                <td>@item.FirstName</td>
+                <td>@item.LastName</td>
+            </tr>
+        }
+    </tbody>
+</table>
 <div>
     @Html.ActionLink("Edit", "Edit", new { id = Model.ManagerId}, new {@class="btn btn-primary"})
     <a class="btn btn-secondary" asp-action="Index">Back to List</a>

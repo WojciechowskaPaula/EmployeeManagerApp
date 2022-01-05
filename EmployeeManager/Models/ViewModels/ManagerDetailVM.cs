@@ -10,5 +10,6 @@ namespace EmployeeManager.Models.ViewModels
         public int ManagerId { get; set; }
         public int RoomNumber { get; set; }
         public int EmployeeId { get; set; }
+        public List<Employee> Employees { get; set; }
     }
 }

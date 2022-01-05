@@ -2,6 +2,7 @@
 using EmployeeManager.Models;
 using EmployeeManager.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,6 +29,7 @@ namespace EmployeeManager.Controllers
         public IActionResult Details(int id)
         {
             var managerDetails = _managerService.DisplayDetails(id);
+           
             return View(managerDetails);
         }
 

@@ -31,11 +31,13 @@ namespace EmployeeManager.Services
             managerVM.ManagerId = managerDetails.ManagerId;
             managerVM.RoomNumber = managerDetails.RoomNumber;
             managerVM.EmployeeId = managerDetails.EmployeeId;
+            managerVM.Employees = _dbContext.Employees.Where(x => x.ManagerId == id).ToList();
             return managerVM;
         }
         public ManagerEditVM GetMangerByIdForEdit(int id)
         {
             var manager =_dbContext.Managers.FirstOrDefault(x => x.ManagerId == id);
+
             var vm = new ManagerEditVM();
             vm.ManagerId = manager.ManagerId;
             vm.RoomNumber = manager.RoomNumber;
