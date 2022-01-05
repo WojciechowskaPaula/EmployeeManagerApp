@@ -1,6 +1,7 @@
 ﻿using EmployeeManager.Interfaces;
 using EmployeeManager.Models;
 using EmployeeManager.Models.ViewModels;
+using EmployeeManager.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
@@ -13,9 +14,11 @@ namespace EmployeeManager.Controllers
     public class ManagerController : Controller
     {
         private readonly IManagerService _managerService;
-        public ManagerController(IManagerService managerService)
+        private readonly IEmployeeService _employeeService;
+        public ManagerController(IManagerService managerService, IEmployeeService employeeService)
         {
             _managerService = managerService;
+            _employeeService = employeeService;
         }
 
         [HttpGet]
@@ -49,7 +52,16 @@ namespace EmployeeManager.Controllers
         [HttpGet]
         public IActionResult AddNewManagerForm()
         {
-            return View();
+            var vm = new ManagerEditVM();
+            var allEmployees = _employeeService.GetAllEmployees();
+            vm.Employees = allEmployees.Select(x => new SelectListItem()
+            {
+                Value = x.EmployeeId.ToString(),
+                Text = x.EmployeeId.ToString()
+
+            }).ToList();
+            
+            return View(vm);
         }
         
         [HttpPost]
