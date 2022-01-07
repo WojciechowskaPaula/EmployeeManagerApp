@@ -10,8 +10,7 @@
         <div class="col-md-4">
             <form asp-action="EditPosition" method="post">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                <label asp-for="PositionId" class="control-label"></label>
-                <input readonly asp-for="PositionId" class="form-control" />
+                <input hidden asp-for="PositionId" class="form-control" />
                 <div class="form-group">
                     <label asp-for="PositionName" class="control-label"></label>
                     <input asp-for="PositionName" class="form-control" />
