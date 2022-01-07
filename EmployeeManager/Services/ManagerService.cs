@@ -37,7 +37,6 @@ namespace EmployeeManager.Services
         public ManagerEditVM GetMangerByIdForEdit(int id)
         {
             var manager =_dbContext.Managers.FirstOrDefault(x => x.ManagerId == id);
-
             var vm = new ManagerEditVM();
             vm.ManagerId = manager.ManagerId;
             vm.RoomNumber = manager.RoomNumber;
@@ -77,5 +76,6 @@ namespace EmployeeManager.Services
             _dbContext.Managers.Remove(managerToRemove);
             _dbContext.SaveChanges();
         }
+
     }
 }
