@@ -1,5 +1,10 @@
 using EmployeeManager.Interfaces;
+using EmployeeManager.Models;
+using EmployeeManager.Models.ViewHelpers;
+using EmployeeManager.Models.ViewModels;
 using EmployeeManager.Services;
+using FluentValidation;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -27,11 +32,15 @@ namespace EmployeeManager
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<EmployeeManager.Data.ApplicationDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-            services.AddControllersWithViews();
+            services.AddControllersWithViews().AddFluentValidation();
+            services.AddTransient<IValidator<EmployeeAddVM>, EmployeeValidator>();
+
             services.AddTransient<IEmployeeService, EmployeeService>();
             services.AddTransient<IProjectService, ProjectService>();
             services.AddTransient<IManagerService, ManagerService>();
             services.AddTransient<IPositionService, PositionService>();
+
+            services.AddTransient<EmployeeHelper, EmployeeHelper>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

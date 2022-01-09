@@ -18,13 +18,16 @@ namespace EmployeeManager.Controllers
         private readonly IProjectService _projectService;
         private readonly IManagerService _managerService;
         private readonly IPositionService _positionService;
+        private readonly EmployeeHelper _employeeHelper;
 
-        public EmployeeController(IEmployeeService employeeService, IProjectService projectService, IManagerService managerService, IPositionService positionService )
+        public EmployeeController(IEmployeeService employeeService, IProjectService projectService, IManagerService managerService,
+            IPositionService positionService, EmployeeHelper employeeHelper)
         {
             _employeeService = employeeService;
             _projectService = projectService;
             _managerService = managerService;
             _positionService = positionService;
+            _employeeHelper = employeeHelper;
             
         }
 
@@ -51,22 +54,30 @@ namespace EmployeeManager.Controllers
         public IActionResult AddEmployeeForm()
         {
             EmployeeAddVM employeeAddVM = new EmployeeAddVM();
-            employeeAddVM.Managers = new List<ManagerListInfo>();
-            var listOfManagers = _managerService.GetListOfManagers();
-            foreach (var item in listOfManagers)
-            {
-                var employee = _employeeService.GetEmployeeById(item.EmployeeId);
-                ManagerListInfo managerListInfo = new ManagerListInfo();
-                managerListInfo.ManagerId = item.ManagerId;
-                managerListInfo.FullName = $"{employee.FirstName} {employee.LastName}";
-                employeeAddVM.Managers.Add(managerListInfo);
-            }
+            employeeAddVM = _employeeHelper.AddManagerList(employeeAddVM);
             return View(employeeAddVM);
         }
+
         [HttpPost]
-        public IActionResult AddNewEmployee(Employee employee)
+        [ValidateAntiForgeryToken]
+        public IActionResult AddNewEmployee(EmployeeAddVM employee)
         {
-            var newEmployee = _employeeService.AddNewEmployee(employee);
+            if (!ModelState.IsValid)
+            {
+                employee = _employeeHelper.AddManagerList(employee);
+                return View("AddEmployeeForm", employee);
+            }
+            var employeeToAdd = new Employee();
+            employeeToAdd.EmployeeId = employee.EmployeeId;
+            employeeToAdd.FirstName = employee.FirstName;
+            employeeToAdd.LastName = employee.LastName;
+            employeeToAdd.BirthDate = employee.BirthDate;
+            employeeToAdd.Gender = employee.Gender;
+            employeeToAdd.City = employee.City;
+            employeeToAdd.Country = employee.Country;
+            employeeToAdd.ZipCode = employee.ZipCode;
+            employeeToAdd.ManagerId = employee.ManagerId;
+            _employeeService.AddNewEmployee(employeeToAdd);
             return RedirectToAction("Index");
         }
 
