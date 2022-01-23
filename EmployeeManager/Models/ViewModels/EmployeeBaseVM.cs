@@ -34,7 +34,8 @@ namespace EmployeeManager.Models.ViewModels
             RuleFor(x => x.Country).NotEmpty().WithMessage("Please enter {PropertyName}");
             RuleFor(x => x.City).NotEmpty().WithMessage("Please enter {PropertyName}")
                 .MaximumLength(255).WithMessage("Field can contain a maximum of 255 characters");
-            RuleFor(x => x.ZipCode).Cascade(CascadeMode.Stop).NotNull().Must((x, y) => IsValidZipCode(x)).WithMessage("Invalid ZipCode");
+            RuleFor(x => x.ZipCode).Cascade(CascadeMode.Stop).NotNull().WithMessage("Please enter {PropertyName}")
+                .Must((x, y) => IsValidZipCode(x)).WithMessage("Invalid ZipCode");
         }
         private bool IsValidZipCode(EmployeeBaseVM employee)
         {

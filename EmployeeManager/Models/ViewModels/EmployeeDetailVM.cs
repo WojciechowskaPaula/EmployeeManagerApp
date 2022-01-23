@@ -20,4 +20,6 @@ namespace EmployeeManager.Models.ViewModels
         public Position Position { get; set; }
         public List<Project> Projects { get; set; }
     }
+
+   
 }
