@@ -35,7 +35,7 @@ namespace EmployeeManager
             services.AddControllersWithViews().AddFluentValidation();
             services.AddTransient<IValidator<EmployeeBaseVM>, EmployeeBaseValidator>();
             services.AddTransient<IValidator<EmployeeAddVM>, EmployeeValidator>();
-           
+            services.AddTransient<IValidator<EmployeeEditVM>, EmployeeEditVMValidator>();
 
 
             services.AddTransient<IEmployeeService, EmployeeService>();
