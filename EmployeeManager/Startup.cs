@@ -33,7 +33,10 @@ namespace EmployeeManager
         {
             services.AddDbContext<EmployeeManager.Data.ApplicationDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddControllersWithViews().AddFluentValidation();
+            services.AddTransient<IValidator<EmployeeBaseVM>, EmployeeBaseValidator>();
             services.AddTransient<IValidator<EmployeeAddVM>, EmployeeValidator>();
+           
+
 
             services.AddTransient<IEmployeeService, EmployeeService>();
             services.AddTransient<IProjectService, ProjectService>();
