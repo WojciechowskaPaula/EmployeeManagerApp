@@ -26,9 +26,6 @@ namespace EmployeeManager.Models.ViewModels
             RuleFor(x => x.BirthDate)
                 .NotEmpty()
                 .Must(BeOver18).WithMessage("Invalid BirthDate");
-            
-            
-            
         }
 
         private bool BeOver18(DateTime dateOfBirth)

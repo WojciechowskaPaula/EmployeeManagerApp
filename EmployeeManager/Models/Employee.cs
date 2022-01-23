@@ -1,4 +1,5 @@
-﻿using FluentValidation;
+﻿using EmployeeManager.Models.ViewModels;
+using FluentValidation;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,31 @@ namespace EmployeeManager.Models
 {
     public class Employee
     {
+        public Employee() { }
+        public Employee(EmployeeEditVM employeeEditVM)
+        {
+            this.EmployeeId = employeeEditVM.EmployeeId;
+            this.FirstName = employeeEditVM.FirstName;
+            this.LastName = employeeEditVM.LastName;
+            this.BirthDate = DateTime.Parse(employeeEditVM.BirthDate);
+            this.Gender = employeeEditVM.Gender;
+            this.City = employeeEditVM.City;
+            this.Country = employeeEditVM.Country;
+            this.ZipCode = employeeEditVM.ZipCode;
+            this.ManagerId = employeeEditVM.ManagerId;
+        }
+        public Employee(EmployeeAddVM employeeAddVM)
+        {
+            this.EmployeeId = employeeAddVM.EmployeeId;
+            this.FirstName = employeeAddVM.FirstName;
+            this.LastName = employeeAddVM.LastName;
+            this.BirthDate = employeeAddVM.BirthDate;
+            this.Gender = employeeAddVM.Gender;
+            this.City = employeeAddVM.City;
+            this.Country = employeeAddVM.Country;
+            this.ZipCode = employeeAddVM.ZipCode;
+            this.ManagerId = employeeAddVM.ManagerId;
+        }
         public int EmployeeId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }

@@ -67,16 +67,7 @@ namespace EmployeeManager.Controllers
                 employee = _employeeHelper.AddManagerList(employee);
                 return View("AddEmployeeForm", employee);
             }
-            var employeeToAdd = new Employee();
-            employeeToAdd.EmployeeId = employee.EmployeeId;
-            employeeToAdd.FirstName = employee.FirstName;
-            employeeToAdd.LastName = employee.LastName;
-            employeeToAdd.BirthDate = employee.BirthDate;
-            employeeToAdd.Gender = employee.Gender;
-            employeeToAdd.City = employee.City;
-            employeeToAdd.Country = employee.Country;
-            employeeToAdd.ZipCode = employee.ZipCode;
-            employeeToAdd.ManagerId = employee.ManagerId;
+            var employeeToAdd = new Employee(employee);
             _employeeService.AddNewEmployee(employeeToAdd);
             return RedirectToAction("Index");
         }
@@ -87,6 +78,7 @@ namespace EmployeeManager.Controllers
             var edit = _employeeService.GetEmployeeByIdForEdit(id);
             edit.Projects = _projectService.GetProjectByEmployeeId(id);
             edit.Managers = new List<ManagerListInfo>();
+           
             edit.Positions = _positionService.GetListOfPositions();
             var employeePosition = _positionService.GetPositionByEmployee(id);
             
@@ -108,8 +100,6 @@ namespace EmployeeManager.Controllers
                 ProjectName = x.ProjectName
             });
             ViewBag.Projects = new SelectList(namesOfProjects, "ProjectId", "ProjectName");
-
-            //positions = positions.Except(employeePosition).ToList();
             var namesOfPositions = edit.Positions.Select(x => new
             {
                 PositionId= x.PositionId,
@@ -123,9 +113,48 @@ namespace EmployeeManager.Controllers
             return View(edit);
         }
         [HttpPost]
-        public IActionResult Update(Employee employee)
+        [ValidateAntiForgeryToken]
+        public IActionResult Update(EmployeeEditVM employee)
         {
-            var update = _employeeService.UpdateEmployee(employee);
+            if (!ModelState.IsValid)
+            {
+                employee.Positions = _positionService.GetListOfPositions();
+                var employeePosition = _positionService.GetPositionByEmployee(employee.EmployeeId);
+                employee.Projects = _projectService.GetProjectByEmployeeId(employee.EmployeeId);
+
+                var listOfManagers = _managerService.GetListOfManagers();
+                foreach (var item in listOfManagers)
+                {
+                    employee.Managers = new List<ManagerListInfo>();
+                    ManagerListInfo managerListInfo = new ManagerListInfo();
+                    managerListInfo.ManagerId = item.ManagerId;
+                    managerListInfo.FullName = $"{employee.FirstName} {employee.LastName}";
+                    employee.Managers.Add(managerListInfo);
+                }
+                var listOfProjects = _projectService.GetListOfProjects();
+                listOfProjects = listOfProjects.Except(employee.Projects).ToList();
+                var namesOfProjects = listOfProjects.Select(x => new
+                {
+                    ProjectId = x.ProjectId,
+                    ProjectName = x.ProjectName
+                });
+                ViewBag.Projects = new SelectList(namesOfProjects, "ProjectId", "ProjectName");
+                var namesOfPositions = employee.Positions.Select(x => new
+                {
+                    PositionId = x.PositionId,
+                    PositionName = x.PositionName
+                });
+
+                var positionSelectList = new SelectList(namesOfPositions, "PositionId", "PositionName");
+                var selectedValue = positionSelectList.Where(x => x.Value == employeePosition.PositionId.ToString()).FirstOrDefault();
+                selectedValue.Selected = true;
+                ViewBag.Positions = positionSelectList;
+
+
+                return View("EditEmployeeForm", employee);
+            }
+            var employeeToUpdate = new Employee(employee);
+            var update = _employeeService.UpdateEmployee(employeeToUpdate);
             return RedirectToAction("Index");
         }
        
