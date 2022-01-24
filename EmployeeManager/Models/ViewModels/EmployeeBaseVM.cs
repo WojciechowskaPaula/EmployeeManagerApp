@@ -40,7 +40,7 @@ namespace EmployeeManager.Models.ViewModels
         private bool IsValidZipCode(EmployeeBaseVM employee)
         {
             var regexPL = new Regex("^\\d{2}[- ]{0,1}\\d{3}$");
-            var regexJP = new Regex("^\\d{7}\\s\\(\\d{3}-\\d{4}\\)$");
+            var regexJP = new Regex("^\\d{3}-\\d{4}$");
 
             if (employee.Country == "Poland")
             {
