@@ -44,9 +44,19 @@ namespace EmployeeManager.Controllers
         }
         
         [HttpPost]
-        public IActionResult Edit(Manager manager)
+        [ValidateAntiForgeryToken]
+        public IActionResult Edit(ManagerEditVM manager)
         {
-            _managerService.Update(manager);
+            if (!ModelState.IsValid)
+            {
+                return View("Edit", manager);
+            }
+            var managerToEdit = new Manager();
+            managerToEdit.ManagerId = manager.ManagerId;
+            managerToEdit.RoomNumber = manager.RoomNumber;
+            managerToEdit.EmployeeId = manager.EmployeeId;
+            
+            _managerService.Update(managerToEdit);
             return RedirectToAction("Index");
         }
         [HttpGet]

@@ -36,6 +36,7 @@ namespace EmployeeManager
             services.AddTransient<IValidator<EmployeeBaseVM>, EmployeeBaseValidator>();
             services.AddTransient<IValidator<EmployeeAddVM>, EmployeeValidator>();
             services.AddTransient<IValidator<EmployeeEditVM>, EmployeeEditVMValidator>();
+            services.AddTransient<IValidator<ManagerEditVM>, ManagerValidator>();
 
 
             services.AddTransient<IEmployeeService, EmployeeService>();
