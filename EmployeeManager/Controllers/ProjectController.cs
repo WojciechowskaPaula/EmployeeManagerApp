@@ -1,6 +1,7 @@
 ﻿using EmployeeManager.Interfaces;
 using EmployeeManager.Models;
 using EmployeeManager.Models.ViewHelpers;
+using EmployeeManager.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
@@ -14,7 +15,7 @@ namespace EmployeeManager.Controllers
     {
         private readonly IProjectService _projectService;
         private readonly IEmployeeService _employeeService;
-        
+
         public ProjectController(IProjectService projectService, IEmployeeService employeeService)
         {
             _projectService = projectService;
@@ -35,17 +36,22 @@ namespace EmployeeManager.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult AddNewProject(Project project)
         {
-           var newProject = _projectService.AddNewProject(project);
+            if (!ModelState.IsValid)
+            {
+                return View("AddNewProject", project);
+            }
+            var newProject = _projectService.AddNewProject(project);
             return RedirectToAction("Index");
         }
 
         [HttpGet]
         public IActionResult Details(int id)
         {
-           var employeeList = _projectService.GetEmployeeByProjectId(id);
-           var details = _projectService.DisplayProjectDetails(id);
+            var employeeList = _projectService.GetEmployeeByProjectId(id);
+            var details = _projectService.DisplayProjectDetails(id);
             details.Employees = employeeList;
             return View(details);
         }
@@ -58,6 +64,7 @@ namespace EmployeeManager.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult Delete(int id)
         {
             _projectService.DeleteProject(id);
@@ -68,7 +75,7 @@ namespace EmployeeManager.Controllers
         public IActionResult DeleteFromEmployee(int projectId, int employeeId)
         {
             _projectService.DeleteProjectFromEmployee(projectId, employeeId);
-            return RedirectToAction("EditProjectForm",new {id = projectId});
+            return RedirectToAction("EditProjectForm", new { id = projectId });
         }
         [HttpGet]
         public IActionResult EditProjectForm(int id)
@@ -77,7 +84,7 @@ namespace EmployeeManager.Controllers
             var allEmployees = _employeeService.GetAllEmployees();
             projectVM.Employees = _projectService.GetEmployeeByProjectId(id);
             allEmployees = allEmployees.Except(projectVM.Employees).ToList();
-            
+
             var allEmployeesFullName = allEmployees.Select(x => new
             {
                 EmployeeId = x.EmployeeId,
@@ -88,14 +95,30 @@ namespace EmployeeManager.Controllers
             return View(projectVM);
         }
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult AddEmployeeToProject(EmployeeProject employeeProject)
         {
             _projectService.AddEmployeeToProject(employeeProject);
             return RedirectToAction("Index");
         }
         [HttpPost]
-        public IActionResult Update(Project project)
+        [ValidateAntiForgeryToken]
+        public IActionResult Update(ProjectEditVM project)
         {
+            if (!ModelState.IsValid)
+            {
+                var allEmployees = _employeeService.GetAllEmployees();
+                project.Employees = _projectService.GetEmployeeByProjectId(project.ProjectId);
+                allEmployees = allEmployees.Except(project.Employees).ToList();
+
+                var allEmployeesFullName = allEmployees.Select(x => new
+                {
+                    EmployeeId = x.EmployeeId,
+                    FullName = $"{x.FirstName} {x.LastName}"
+                }).ToList();
+                ViewBag.Employees = new SelectList(allEmployeesFullName, "EmployeeId", "FullName");
+                return View("EditProjectForm", project);
+            }
             _projectService.UpdateProject(project);
             return RedirectToAction("Index");
         }
