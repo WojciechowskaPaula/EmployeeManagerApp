@@ -60,21 +60,32 @@ namespace EmployeeManager.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult Delete (int positionId)
         {
             _positionService.DeletePosition(positionId);
             return RedirectToAction("Index");
         }
+
         [HttpGet]
         public IActionResult EditPosition(int positionId)
         {
             var details = _positionService.DisplayPositionDetails(positionId);
             return View(details);
         }
+
         [HttpPost]
-        public IActionResult Update(Position position)
+        [ValidateAntiForgeryToken]
+        public IActionResult Update(PositionDetailsVM position)
         {
-           _positionService.UpdatePosition(position);
+            if (!ModelState.IsValid)
+            {
+                return View("EditPosition", position);
+            }
+            //var positionToUpdate = new Position();
+            //positionToUpdate.PositionId = position.PositionId;
+            //positionToUpdate.PositionName = position.PositionName;
+            _positionService.UpdatePosition(position);
             return RedirectToAction("Index");
         }
     }

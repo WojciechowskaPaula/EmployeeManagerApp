@@ -1,13 +1,17 @@
-﻿using System;
+﻿using FluentValidation;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace EmployeeManager.Models.ViewModels
 {
-    public class PositionDetailsVM
+    public class PositionDetailsVM : PositionAddVM { }
+    public class PositionDetailsVMValidator : AbstractValidator<PositionDetailsVM>
     {
-        public int PositionId { get; set; }
-        public string PositionName { get; set; }
+        public PositionDetailsVMValidator()
+        {
+            Include(new PositionValidator());
+        }
     }
 }
