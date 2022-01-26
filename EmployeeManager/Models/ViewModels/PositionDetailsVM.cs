@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace EmployeeManager.Models.ViewModels
 {
-    public class PositionDetailsVM : PositionAddVM { }
+    public class PositionDetailsVM : Position { }
     public class PositionDetailsVMValidator : AbstractValidator<PositionDetailsVM>
     {
         public PositionDetailsVMValidator()
