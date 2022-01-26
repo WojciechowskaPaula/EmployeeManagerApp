@@ -1,5 +1,6 @@
 ﻿using EmployeeManager.Interfaces;
 using EmployeeManager.Models;
+using EmployeeManager.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -25,13 +26,22 @@ namespace EmployeeManager.Controllers
         [HttpGet]
         public IActionResult AddNewPositionForm()
         {
-            return View();
+            PositionAddVM position = new PositionAddVM();
+            return View(position);
         }
 
-        [HttpGet]
-        public IActionResult AddNewPosition(Position position)
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult AddNewPosition(PositionAddVM position)
         {
-           var newPosition = _positionService.AddNewPosition(position);
+            if (!ModelState.IsValid)
+            {
+                return View("AddNewPositionForm", position);
+            }
+            var positionToAdd = new Position();
+            positionToAdd.PositionId = position.PositionId;
+            positionToAdd.PositionName = position.PositionName;
+            _positionService.AddNewPosition(positionToAdd);
             return RedirectToAction("Index");
         }
 
