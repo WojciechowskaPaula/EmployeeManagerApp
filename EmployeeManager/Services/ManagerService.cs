@@ -76,6 +76,5 @@ namespace EmployeeManager.Services
             _dbContext.Managers.Remove(managerToRemove);
             _dbContext.SaveChanges();
         }
-
     }
 }

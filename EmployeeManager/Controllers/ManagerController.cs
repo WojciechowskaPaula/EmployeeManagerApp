@@ -70,13 +70,24 @@ namespace EmployeeManager.Controllers
                 Text = x.EmployeeId.ToString()
 
             }).ToList();
-            
             return View(vm);
         }
         
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult AddNewManager(ManagerEditVM managerVM)
         {
+            if (!ModelState.IsValid)
+            {
+                var allEmployees = _employeeService.GetAllEmployees();
+                managerVM.Employees = allEmployees.Select(x => new SelectListItem()
+                {
+                    Value = x.EmployeeId.ToString(),
+                    Text = x.EmployeeId.ToString()
+
+                }).ToList();
+                return View("AddNewManagerForm", managerVM);
+            }
             _managerService.AddNewManager(managerVM);
             return RedirectToAction("Index");
         }
@@ -89,6 +100,7 @@ namespace EmployeeManager.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult Delete(int id)
         {
             _managerService.DeleteManager(id);
