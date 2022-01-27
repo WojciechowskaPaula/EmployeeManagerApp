@@ -2,10 +2,6 @@
 using EmployeeManager.Models;
 using EmployeeManager.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace EmployeeManager.Controllers
 {
@@ -16,10 +12,11 @@ namespace EmployeeManager.Controllers
         {
             _positionService = positionService;
         }
+
         [HttpGet]
         public IActionResult Index()
         {
-           var positions = _positionService.GetListOfPositions();
+            var positions = _positionService.GetListOfPositions();
             return View(positions);
         }
 
@@ -42,11 +39,12 @@ namespace EmployeeManager.Controllers
             positionToAdd.PositionId = position.PositionId;
             positionToAdd.PositionName = position.PositionName;
             _positionService.AddNewPosition(positionToAdd);
+
             return RedirectToAction("Index");
         }
 
         [HttpGet]
-       public IActionResult DisplayPositionDetails(int positionId)
+        public IActionResult DisplayPositionDetails(int positionId)
         {
             var details = _positionService.DisplayPositionDetails(positionId);
             return View(details);
@@ -61,7 +59,7 @@ namespace EmployeeManager.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Delete (int positionId)
+        public IActionResult Delete(int positionId)
         {
             _positionService.DeletePosition(positionId);
             return RedirectToAction("Index");
@@ -82,9 +80,6 @@ namespace EmployeeManager.Controllers
             {
                 return View("EditPosition", position);
             }
-            //var positionToUpdate = new Position();
-            //positionToUpdate.PositionId = position.PositionId;
-            //positionToUpdate.PositionName = position.PositionName;
             _positionService.UpdatePosition(position);
             return RedirectToAction("Index");
         }

@@ -12,6 +12,7 @@ namespace EmployeeManager.Models.ViewModels
         public int EmployeeId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
+        public DateTime BirthDate { get; set; }
         public string Gender { get; set; }
         public string Country { get; set; }
         public string City { get; set; }
@@ -52,8 +53,17 @@ namespace EmployeeManager.Models.ViewModels
             }
             return false;
         }
+        public bool BeOver18(DateTime dateOfBirth)
+        {
+            var dateNow = DateTime.Today;
+            var years = dateNow.Year - dateOfBirth.Year;
+            if (dateNow.DayOfYear <= dateOfBirth.DayOfYear)
+            {
+                years = years - 1;
+            }
+            return years >= 18;
+        }
 
-       
     }
     
 }

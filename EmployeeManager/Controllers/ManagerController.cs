@@ -1,13 +1,9 @@
 ﻿using EmployeeManager.Interfaces;
 using EmployeeManager.Models;
 using EmployeeManager.Models.ViewModels;
-using EmployeeManager.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace EmployeeManager.Controllers
 {
@@ -32,7 +28,6 @@ namespace EmployeeManager.Controllers
         public IActionResult Details(int id)
         {
             var managerDetails = _managerService.DisplayDetails(id);
-           
             return View(managerDetails);
         }
 
@@ -51,14 +46,16 @@ namespace EmployeeManager.Controllers
             {
                 return View("Edit", manager);
             }
-            var managerToEdit = new Manager();
-            managerToEdit.ManagerId = manager.ManagerId;
-            managerToEdit.RoomNumber = manager.RoomNumber;
-            managerToEdit.EmployeeId = manager.EmployeeId;
-            
+            var managerToEdit = new Manager
+            {
+                ManagerId = manager.ManagerId,
+                RoomNumber = manager.RoomNumber,
+                EmployeeId = manager.EmployeeId
+            };
             _managerService.Update(managerToEdit);
             return RedirectToAction("Index");
         }
+
         [HttpGet]
         public IActionResult AddNewManagerForm()
         {
@@ -68,8 +65,8 @@ namespace EmployeeManager.Controllers
             {
                 Value = x.EmployeeId.ToString(),
                 Text = x.EmployeeId.ToString()
-
             }).ToList();
+
             return View(vm);
         }
         
@@ -84,8 +81,8 @@ namespace EmployeeManager.Controllers
                 {
                     Value = x.EmployeeId.ToString(),
                     Text = x.EmployeeId.ToString()
-
                 }).ToList();
+
                 return View("AddNewManagerForm", managerVM);
             }
             _managerService.AddNewManager(managerVM);
@@ -106,6 +103,5 @@ namespace EmployeeManager.Controllers
             _managerService.DeleteManager(id);
             return RedirectToAction("Index");
         }
-
     }
 }

@@ -2,13 +2,10 @@
 using EmployeeManager.Models;
 using EmployeeManager.Models.ViewHelpers;
 using EmployeeManager.Models.ViewModels;
-using EmployeeManager.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace EmployeeManager.Controllers
 {
@@ -28,7 +25,6 @@ namespace EmployeeManager.Controllers
             _managerService = managerService;
             _positionService = positionService;
             _employeeHelper = employeeHelper;
-            
         }
 
         [HttpGet]
@@ -44,12 +40,12 @@ namespace EmployeeManager.Controllers
             var employeeProject = _projectService.GetProjectByEmployeeId(id);
             var employeePosition = _positionService.GetPositionByEmployee(id);
             var details = _employeeService.GetEmployeeDetail(id);
-            
             details.Projects = employeeProject;
             details.Position = employeePosition;
+
             return View(details);
         }
-        
+
         [HttpGet]
         public IActionResult AddEmployeeForm()
         {
@@ -69,6 +65,7 @@ namespace EmployeeManager.Controllers
             }
             var employeeToAdd = new Employee(employee);
             _employeeService.AddNewEmployee(employeeToAdd);
+
             return RedirectToAction("Index");
         }
 
@@ -76,88 +73,24 @@ namespace EmployeeManager.Controllers
         public IActionResult EditEmployeeForm(int id)
         {
             var edit = _employeeService.GetEmployeeByIdForEdit(id);
-            edit.Projects = _projectService.GetProjectByEmployeeId(id);
-            edit.Managers = new List<ManagerListInfo>();
-           
-            edit.Positions = _positionService.GetListOfPositions();
-            var employeePosition = _positionService.GetPositionByEmployee(id);
-            
-            
-            var listOfManagers = _managerService.GetListOfManagers();
-            foreach (var item in listOfManagers)
-            {
-                var employee = _employeeService.GetEmployeeById(item.EmployeeId);
-                ManagerListInfo managerListInfo = new ManagerListInfo();
-                managerListInfo.ManagerId = item.ManagerId;
-                managerListInfo.FullName = $"{employee.FirstName} {employee.LastName}";
-                edit.Managers.Add(managerListInfo);
-            }
-            var listOfProjects = _projectService.GetListOfProjects();
-            listOfProjects = listOfProjects.Except(edit.Projects).ToList();
-            var namesOfProjects = listOfProjects.Select(x => new
-            {
-                ProjectId = x.ProjectId,
-                ProjectName = x.ProjectName
-            });
-            ViewBag.Projects = new SelectList(namesOfProjects, "ProjectId", "ProjectName");
-            var namesOfPositions = edit.Positions.Select(x => new
-            {
-                PositionId= x.PositionId,
-                PositionName = x.PositionName
-            });
-            
-             var positionSelectList =  new SelectList(namesOfPositions, "PositionId", "PositionName");
-            var selectedValue = positionSelectList.Where(x => x.Value == employeePosition.PositionId.ToString()).FirstOrDefault();
-            selectedValue.Selected = true;
-            ViewBag.Positions = positionSelectList;
+            edit = FillEmployeeEditVM(edit);
             return View(edit);
         }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Update(EmployeeEditVM employee)
         {
             if (!ModelState.IsValid)
             {
-                employee.Positions = _positionService.GetListOfPositions();
-                var employeePosition = _positionService.GetPositionByEmployee(employee.EmployeeId);
-                employee.Projects = _projectService.GetProjectByEmployeeId(employee.EmployeeId);
-
-                var listOfManagers = _managerService.GetListOfManagers();
-                foreach (var item in listOfManagers)
-                {
-                    employee.Managers = new List<ManagerListInfo>();
-                    ManagerListInfo managerListInfo = new ManagerListInfo();
-                    managerListInfo.ManagerId = item.ManagerId;
-                    managerListInfo.FullName = $"{employee.FirstName} {employee.LastName}";
-                    employee.Managers.Add(managerListInfo);
-                }
-                var listOfProjects = _projectService.GetListOfProjects();
-                listOfProjects = listOfProjects.Except(employee.Projects).ToList();
-                var namesOfProjects = listOfProjects.Select(x => new
-                {
-                    ProjectId = x.ProjectId,
-                    ProjectName = x.ProjectName
-                });
-                ViewBag.Projects = new SelectList(namesOfProjects, "ProjectId", "ProjectName");
-                var namesOfPositions = employee.Positions.Select(x => new
-                {
-                    PositionId = x.PositionId,
-                    PositionName = x.PositionName
-                });
-
-                var positionSelectList = new SelectList(namesOfPositions, "PositionId", "PositionName");
-                var selectedValue = positionSelectList.Where(x => x.Value == employeePosition.PositionId.ToString()).FirstOrDefault();
-                selectedValue.Selected = true;
-                ViewBag.Positions = positionSelectList;
-
-
+                employee = FillEmployeeEditVM(employee);
                 return View("EditEmployeeForm", employee);
             }
             var employeeToUpdate = new Employee(employee);
-            var update = _employeeService.UpdateEmployee(employeeToUpdate);
+            _employeeService.UpdateEmployee(employeeToUpdate);
             return RedirectToAction("Index");
         }
-       
+
         [HttpGet]
         public IActionResult DeleteAndConfirm(int id)
         {
@@ -168,12 +101,12 @@ namespace EmployeeManager.Controllers
         [HttpPost]
         public IActionResult Delete(int id)
         {
-             _employeeService.Delete(id);
-           
+            _employeeService.Delete(id);
             return RedirectToAction("Index");
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult AddProjectToEmployee(EmployeeProject employeeProject)
         {
             _projectService.AddEmployeeToProject(employeeProject);
@@ -187,5 +120,43 @@ namespace EmployeeManager.Controllers
             return RedirectToAction("EditemployeeForm", new { id = employeeId });
         }
 
+        private EmployeeEditVM FillEmployeeEditVM(EmployeeEditVM editVM)
+        {
+            editVM.Positions = _positionService.GetListOfPositions();
+            var namesOfPositions = editVM.Positions.Select(x => new
+            {
+                PositionId = x.PositionId,
+                PositionName = x.PositionName
+            });
+            var employeePosition = _positionService.GetPositionByEmployee(editVM.EmployeeId);
+            var positionSelectList = new SelectList(namesOfPositions, "PositionId", "PositionName");
+            positionSelectList.Where(x => x.Value == employeePosition.PositionId.ToString()).FirstOrDefault().Selected = true;
+            ViewBag.Positions = positionSelectList;
+
+            editVM.Managers = new List<ManagerListInfo>();
+            var listOfManagers = _managerService.GetListOfManagers();
+            foreach (var item in listOfManagers)
+            {
+                var employee = _employeeService.GetEmployeeById(item.EmployeeId);
+                ManagerListInfo managerListInfo = new ManagerListInfo
+                {
+                    ManagerId = item.ManagerId,
+                    FullName = $"{employee.FirstName} {employee.LastName}"
+                };
+                editVM.Managers.Add(managerListInfo);
+            }
+
+            editVM.Projects = _projectService.GetProjectByEmployeeId(editVM.EmployeeId);
+            var listOfProjects = _projectService.GetListOfProjects();
+            listOfProjects = listOfProjects.Except(editVM.Projects).ToList();
+            var namesOfProjects = listOfProjects.Select(x => new
+            {
+                ProjectId = x.ProjectId,
+                ProjectName = x.ProjectName
+            });
+            ViewBag.Projects = new SelectList(namesOfProjects, "ProjectId", "ProjectName");
+
+            return editVM;
+        }
     }
 }

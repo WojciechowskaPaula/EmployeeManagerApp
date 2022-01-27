@@ -2,10 +2,8 @@
 using EmployeeManager.Interfaces;
 using EmployeeManager.Models;
 using EmployeeManager.Models.ViewModels;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace EmployeeManager.Services
 {
@@ -37,7 +35,6 @@ namespace EmployeeManager.Services
             detailVM.ProjectId = project.ProjectId;
             detailVM.ProjectName = project.ProjectName;
             return detailVM;
-            
         }
 
         public List<Employee> GetEmployeeByProjectId(int projectId)
@@ -45,7 +42,6 @@ namespace EmployeeManager.Services
             var employee = _dbContext.EmployeeProject.Where(x => x.ProjectId == projectId).Select(y=>y.Employee).ToList();
             return employee;
         }
-       
         
         public void DeleteProject(int id)
         {
@@ -63,9 +59,11 @@ namespace EmployeeManager.Services
 
         public Project AddNewProject(Project project)
         {
-            var newProject = new Project();
-            newProject.ProjectId = project.ProjectId;
-            newProject.ProjectName = project.ProjectName;
+            var newProject = new Project
+            {
+                ProjectId = project.ProjectId,
+                ProjectName = project.ProjectName
+            };
             _dbContext.Add(newProject);
             _dbContext.SaveChanges();
             return newProject;
@@ -74,9 +72,11 @@ namespace EmployeeManager.Services
         public ProjectEditVM GetProjectByProjectId(int id)
         {
            var project = _dbContext.Projects.FirstOrDefault(x => x.ProjectId == id);
-            var editProject = new ProjectEditVM();
-            editProject.ProjectId = project.ProjectId;
-            editProject.ProjectName = project.ProjectName;
+            var editProject = new ProjectEditVM
+            {
+                ProjectId = project.ProjectId,
+                ProjectName = project.ProjectName
+            };
             return editProject;
         }
        
@@ -94,7 +94,5 @@ namespace EmployeeManager.Services
             _dbContext.EmployeeProject.Add(employeeProject);
             _dbContext.SaveChanges();
         }
-
-
     }
 }

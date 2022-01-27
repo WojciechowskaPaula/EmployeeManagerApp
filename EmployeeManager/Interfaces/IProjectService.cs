@@ -1,9 +1,6 @@
 ﻿using EmployeeManager.Models;
 using EmployeeManager.Models.ViewModels;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace EmployeeManager.Interfaces
 {
@@ -19,6 +16,5 @@ namespace EmployeeManager.Interfaces
         Project UpdateProject(Project project);
         ProjectEditVM GetProjectByProjectId(int id);
         void AddEmployeeToProject(EmployeeProject employeeProject);
-   
     }
 }

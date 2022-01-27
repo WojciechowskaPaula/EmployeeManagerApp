@@ -24,32 +24,36 @@ namespace EmployeeManager.Services
         public EmployeeDetailVM GetEmployeeDetail(int id)
         {
             var detail = _dbContext.Employees.FirstOrDefault(x => x.EmployeeId == id);
-            var vm = new EmployeeDetailVM();
-            vm.EmployeeId = detail.EmployeeId;
-            vm.FirstName = detail.FirstName;
-            vm.LastName = detail.LastName;
-            vm.BirthDate = detail.BirthDate.ToString("d");
-            vm.Gender = detail.Gender;
-            vm.City = detail.City;
-            vm.Country = detail.Country;
-            vm.ZipCode = detail.ZipCode;
-            vm.ManagerId = detail.ManagerId;
+            var vm = new EmployeeDetailVM
+            {
+                EmployeeId = detail.EmployeeId,
+                FirstName = detail.FirstName,
+                LastName = detail.LastName,
+                BirthDate = detail.BirthDate.ToString("d"),
+                Gender = detail.Gender,
+                City = detail.City,
+                Country = detail.Country,
+                ZipCode = detail.ZipCode,
+                ManagerId = detail.ManagerId
+            };
             return vm;
         }
 
         public Employee AddNewEmployee(Employee employee)
         {
-            var newEmployee = new Employee();
-            newEmployee.EmployeeId = employee.EmployeeId;
-            newEmployee.FirstName = employee.FirstName;
-            newEmployee.LastName = employee.LastName;
-            newEmployee.BirthDate = employee.BirthDate;
-            newEmployee.Gender = employee.Gender;
-            newEmployee.City = employee.City;
-            newEmployee.Country = employee.Country;
-            newEmployee.ZipCode = employee.ZipCode;
-            newEmployee.ManagerId = employee.ManagerId;
-            newEmployee.Position = employee.Position;
+            var newEmployee = new Employee
+            {
+                EmployeeId = employee.EmployeeId,
+                FirstName = employee.FirstName,
+                LastName = employee.LastName,
+                BirthDate = employee.BirthDate,
+                Gender = employee.Gender,
+                City = employee.City,
+                Country = employee.Country,
+                ZipCode = employee.ZipCode,
+                ManagerId = employee.ManagerId,
+                Position = employee.Position
+            };
             _dbContext.Employees.Add(newEmployee);
             _dbContext.SaveChanges();
             return newEmployee;
@@ -60,15 +64,15 @@ namespace EmployeeManager.Services
             var employee = _dbContext.Employees.FirstOrDefault(x => x.EmployeeId == id);
             return employee;
         }
+
         public Employee UpdateEmployee(Employee employee)
         {
             var oldEmployee = _dbContext.Employees.FirstOrDefault(x => x.EmployeeId == employee.EmployeeId);
             if (oldEmployee.Position != employee.Position)
             {
                 var employeePosition = _dbContext.JobHistories.Where(x => x.EmployeeId == employee.EmployeeId).FirstOrDefault();
-                var oldPosition = _dbContext.JobHistoryPosition.Where(x =>x.JobHistoryId == oldEmployee.JobHistory.JobHistoryId).FirstOrDefault();
+                var oldPosition = _dbContext.JobHistoryPosition.Where(x => x.JobHistoryId == oldEmployee.JobHistory.JobHistoryId).FirstOrDefault();
                 _dbContext.JobHistoryPosition.Remove(oldPosition);
-
                 JobHistoryPosition jobHistoryPosition = new JobHistoryPosition();
                 jobHistoryPosition.JobHistoryId = employeePosition.JobHistoryId;
                 var positionId = int.Parse(employee.Position.PositionName);
@@ -85,8 +89,8 @@ namespace EmployeeManager.Services
             oldEmployee.Country = employee.Country;
             oldEmployee.ZipCode = employee.ZipCode;
             oldEmployee.ManagerId = employee.ManagerId;
-
             _dbContext.SaveChanges();
+
             return employee;
         }
 
@@ -100,23 +104,20 @@ namespace EmployeeManager.Services
         public EmployeeEditVM GetEmployeeByIdForEdit(int id)
         {
             var employee = _dbContext.Employees.FirstOrDefault(x => x.EmployeeId == id);
-            var employeeEditVm = new EmployeeEditVM();
-            employeeEditVm.EmployeeId = employee.EmployeeId;
-            employeeEditVm.FirstName = employee.FirstName;
-            employeeEditVm.LastName = employee.LastName;
-            employeeEditVm.BirthDate = employee.BirthDate.ToString("d");
-            employeeEditVm.Gender = employee.Gender;
-            employeeEditVm.City = employee.City;
-            employeeEditVm.Country = employee.Country;
-            employeeEditVm.ZipCode = employee.ZipCode;
-            employeeEditVm.ManagerId = employee.ManagerId;
-            employeeEditVm.Position = _dbContext.JobHistoryPosition.Where(x => x.JobHistory.EmployeeId == id).Select(x => x.Position).FirstOrDefault();
-            var test = _dbContext.JobHistories.Where(x => x.EmployeeId == id);
-
-
+            var employeeEditVm = new EmployeeEditVM
+            {
+                EmployeeId = employee.EmployeeId,
+                FirstName = employee.FirstName,
+                LastName = employee.LastName,
+                BirthDate = employee.BirthDate,
+                Gender = employee.Gender,
+                City = employee.City,
+                Country = employee.Country,
+                ZipCode = employee.ZipCode,
+                ManagerId = employee.ManagerId,
+                Position = _dbContext.JobHistoryPosition.Where(x => x.JobHistory.EmployeeId == id).Select(x => x.Position).FirstOrDefault()
+            };
             return employeeEditVm;
         }
     }
-
-
 }

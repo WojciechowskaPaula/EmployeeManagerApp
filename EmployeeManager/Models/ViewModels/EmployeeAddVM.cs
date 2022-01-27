@@ -11,9 +11,6 @@ namespace EmployeeManager.Models.ViewModels
 {
     public class EmployeeAddVM : EmployeeBaseVM
     {
-        
-        public DateTime BirthDate { get; set; }
-        
         public List<ManagerListInfo> Managers { get; set; }
         public Position Position { get; set; }
     }
@@ -22,21 +19,6 @@ namespace EmployeeManager.Models.ViewModels
         public EmployeeValidator()
         {
             Include(new EmployeeBaseValidator());
-            
-            RuleFor(x => x.BirthDate)
-                .NotEmpty()
-                .Must(BeOver18).WithMessage("Invalid BirthDate");
-        }
-
-        private bool BeOver18(DateTime dateOfBirth)
-        {
-            var dateNow = DateTime.Today;
-            var years = dateNow.Year - dateOfBirth.Year;
-            if (dateNow.DayOfYear <= dateOfBirth.DayOfYear)
-            {
-                years = years - 1;
-            }
-            return years >= 18;
         }
 
     }

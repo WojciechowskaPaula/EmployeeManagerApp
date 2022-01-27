@@ -3,9 +3,7 @@
 @{
     ViewData["Title"] = "Details";
 }
-
 <h3>Details</h3>
-
 <div>
     <hr />
     <dl class="row">
@@ -91,7 +89,6 @@
         </tbody>
     </table>
 </div>
-
 <div>
     @Html.ActionLink("Edit", "EditEmployeeForm", new { id = Model.EmployeeId }, new { @class = "btn btn-primary" })
     <a class="btn btn-secondary" asp-action="Index">Back to List</a>

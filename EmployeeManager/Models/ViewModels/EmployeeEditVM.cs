@@ -11,7 +11,6 @@ namespace EmployeeManager.Models.ViewModels
 {
     public class EmployeeEditVM : EmployeeBaseVM
     {
-        public string BirthDate { get; set; }
         public List<ManagerListInfo> Managers { get; set; }
         public Position Position { get; set; }
         public List <Position> Positions { get; set; }
@@ -24,6 +23,5 @@ namespace EmployeeManager.Models.ViewModels
         {
             Include(new EmployeeBaseValidator());
         }
-        
     }
 }

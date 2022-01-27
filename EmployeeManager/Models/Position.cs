@@ -1,8 +1,5 @@
 ﻿using FluentValidation;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace EmployeeManager.Models
 {
@@ -11,7 +8,6 @@ namespace EmployeeManager.Models
         public int PositionId { get; set; }
         public string PositionName { get; set; }
         public ICollection<JobHistory> JobHistories { get; set; }
-        
     }
 
     public class PositionValidator : AbstractValidator<Position>

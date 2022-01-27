@@ -2,14 +2,12 @@
 using EmployeeManager.Interfaces;
 using EmployeeManager.Models;
 using EmployeeManager.Models.ViewModels;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace EmployeeManager.Services
 {
-    public class PositionService :IPositionService
+    public class PositionService : IPositionService
     {
         private readonly ApplicationDbContext _dbContext;
         public PositionService(ApplicationDbContext dbContext)
@@ -19,15 +17,17 @@ namespace EmployeeManager.Services
 
         public List<Position> GetListOfPositions()
         {
-           var allPositions =  _dbContext.Positions.ToList();
+            var allPositions = _dbContext.Positions.ToList();
             return allPositions;
         }
 
         public PositionAddVM AddNewPosition(Position position)
         {
-            PositionAddVM newPosition = new PositionAddVM();
-            newPosition.PositionId = position.PositionId;
-            newPosition.PositionName = position.PositionName;
+            PositionAddVM newPosition = new PositionAddVM
+            {
+                PositionId = position.PositionId,
+                PositionName = position.PositionName
+            };
             _dbContext.Positions.Add(position);
             _dbContext.SaveChanges();
             return newPosition;
@@ -36,9 +36,11 @@ namespace EmployeeManager.Services
         public PositionDetailsVM DisplayPositionDetails(int positionId)
         {
             var position = _dbContext.Positions.FirstOrDefault(x => x.PositionId == positionId);
-            PositionDetailsVM positionDetails = new PositionDetailsVM();
-            positionDetails.PositionId = position.PositionId;
-            positionDetails.PositionName = position.PositionName;
+            PositionDetailsVM positionDetails = new PositionDetailsVM
+            {
+                PositionId = position.PositionId,
+                PositionName = position.PositionName
+            };
             return positionDetails;
         }
 
@@ -63,7 +65,5 @@ namespace EmployeeManager.Services
             var position = _dbContext.Positions.FirstOrDefault(x => x.PositionId == positionId);
             return position;
         }
-
-
     }
 }

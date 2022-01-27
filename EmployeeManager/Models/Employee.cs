@@ -16,11 +16,12 @@ namespace EmployeeManager.Models
             this.EmployeeId = employeeEditVM.EmployeeId;
             this.FirstName = employeeEditVM.FirstName;
             this.LastName = employeeEditVM.LastName;
-            this.BirthDate = DateTime.Parse(employeeEditVM.BirthDate);
+            this.BirthDate = employeeEditVM.BirthDate;
             this.Gender = employeeEditVM.Gender;
             this.City = employeeEditVM.City;
             this.Country = employeeEditVM.Country;
             this.ZipCode = employeeEditVM.ZipCode;
+            this.Position = employeeEditVM.Position;
             this.ManagerId = employeeEditVM.ManagerId;
         }
         public Employee(EmployeeAddVM employeeAddVM)
@@ -33,6 +34,7 @@ namespace EmployeeManager.Models
             this.City = employeeAddVM.City;
             this.Country = employeeAddVM.Country;
             this.ZipCode = employeeAddVM.ZipCode;
+            this.Position = employeeAddVM.Position;
             this.ManagerId = employeeAddVM.ManagerId;
         }
         public int EmployeeId { get; set; }

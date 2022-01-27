@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - EmployeeManager</title>
+    <title>@ViewData["Title"] - Employee Manager</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
 </head>
@@ -19,16 +19,16 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Employee" asp-action="Index">Employee</a>
+                            <a class="nav-link text-dark" asp-controller="Employee" asp-action="Index">Employee</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Project" asp-action="Index">Project</a>
+                            <a class="nav-link text-dark" asp-controller="Project" asp-action="Index">Project</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Position" asp-action="Index">Positions</a>
+                            <a class="nav-link text-dark" asp-controller="Position" asp-action="Index">Positions</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Manager" asp-action="Index">Manager</a>
+                            <a class="nav-link text-dark" asp-controller="Manager" asp-action="Index">Manager</a>
                         </li>
                     </ul>
                 </div>
@@ -40,7 +40,6 @@
             @RenderBody()
         </main>
     </div>
-
     <footer class="border-top footer text-muted">
         <div class="container">
             &copy; 2021 - EmployeeManager - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>

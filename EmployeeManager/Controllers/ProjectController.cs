@@ -1,13 +1,9 @@
 ﻿using EmployeeManager.Interfaces;
 using EmployeeManager.Models;
-using EmployeeManager.Models.ViewHelpers;
 using EmployeeManager.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace EmployeeManager.Controllers
 {
@@ -43,7 +39,7 @@ namespace EmployeeManager.Controllers
             {
                 return View("AddNewProject", project);
             }
-            var newProject = _projectService.AddNewProject(project);
+            _projectService.AddNewProject(project);
             return RedirectToAction("Index");
         }
 
@@ -77,23 +73,15 @@ namespace EmployeeManager.Controllers
             _projectService.DeleteProjectFromEmployee(projectId, employeeId);
             return RedirectToAction("EditProjectForm", new { id = projectId });
         }
+
         [HttpGet]
         public IActionResult EditProjectForm(int id)
         {
             var projectVM = _projectService.GetProjectByProjectId(id);
-            var allEmployees = _employeeService.GetAllEmployees();
-            projectVM.Employees = _projectService.GetEmployeeByProjectId(id);
-            allEmployees = allEmployees.Except(projectVM.Employees).ToList();
-
-            var allEmployeesFullName = allEmployees.Select(x => new
-            {
-                EmployeeId = x.EmployeeId,
-                FullName = $"{x.FirstName} {x.LastName}"
-            }).ToList();
-            ViewBag.Employees = new SelectList(allEmployeesFullName, "EmployeeId", "FullName");
-
+            projectVM = FillProjectEditVM(projectVM);
             return View(projectVM);
         }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult AddEmployeeToProject(EmployeeProject employeeProject)
@@ -101,26 +89,33 @@ namespace EmployeeManager.Controllers
             _projectService.AddEmployeeToProject(employeeProject);
             return RedirectToAction("Index");
         }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Update(ProjectEditVM project)
         {
             if (!ModelState.IsValid)
             {
-                var allEmployees = _employeeService.GetAllEmployees();
-                project.Employees = _projectService.GetEmployeeByProjectId(project.ProjectId);
-                allEmployees = allEmployees.Except(project.Employees).ToList();
-
-                var allEmployeesFullName = allEmployees.Select(x => new
-                {
-                    EmployeeId = x.EmployeeId,
-                    FullName = $"{x.FirstName} {x.LastName}"
-                }).ToList();
-                ViewBag.Employees = new SelectList(allEmployeesFullName, "EmployeeId", "FullName");
+                FillProjectEditVM(project);
                 return View("EditProjectForm", project);
             }
             _projectService.UpdateProject(project);
+
             return RedirectToAction("Index");
+        }
+        private ProjectEditVM FillProjectEditVM(ProjectEditVM editVM)
+        {
+            var allEmployees = _employeeService.GetAllEmployees();
+            editVM.Employees = _projectService.GetEmployeeByProjectId(editVM.ProjectId);
+            allEmployees = allEmployees.Except(editVM.Employees).ToList();
+            var allEmployeesFullName = allEmployees.Select(x => new
+            {
+                EmployeeId = x.EmployeeId,
+                FullName = $"{x.FirstName} {x.LastName}"
+            }).ToList();
+            ViewBag.Employees = new SelectList(allEmployeesFullName, "EmployeeId", "FullName");
+
+            return editVM;
         }
     }
 }
