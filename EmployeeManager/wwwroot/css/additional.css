@@ -1,0 +1,18 @@
+﻿.headerh1 {
+    font-size:35px;
+}
+
+.headerh2 {
+    text-align: center;
+    font-size: 25px;
+    margin-top: 9px;
+    margin-bottom: 20px;
+}
+
+.tableEdit {
+    background-color: #EEEEF1;
+}
+
+.theadEdit {
+    background-color: #C2C3CB;
+}
